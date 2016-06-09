@@ -2,7 +2,8 @@
   "name": "guestlist",
   "private": true,
   "scripts": {
-    "start": "ROOT_URL=http://aviemet.dyndns.org:3000 meteor --settings settings.json",
+    "dev": "ROOT_URL=http://aviemet.dyndns.org:3000 meteor --settings settings.json",
+    "start": "meteor settings settings.json",
     "test": "ROOT_URL=http://aviemet.dyndns.org:3000 meteor test --driver-package practicalmeteor:mocha --settings settings.json"
   },
   "dependencies": {
