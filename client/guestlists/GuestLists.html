@@ -1,0 +1,45 @@
+<template name="GuestLists">
+	<h1>Upcoming Events</h1>
+	
+	<label for="showPastEvents">
+		<input type="checkbox" id="showPastEvents" name="showPastEvents" />
+		Show past events
+	</label>
+	
+	<table>
+		<thead>
+			<tr>
+				<th>Event Name</th>
+				<th>Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each lists}}
+				{{> SingleList}}
+			{{/each}}
+		</tbody>
+	</table>
+</template>
+
+<template name="SingleList">
+	<tr>
+		<td><a href="/lists/{{_id}}">{{title}}</a></td>
+		<td>{{formatDate date}}</td>
+	</tr>
+</template>
+
+<template name="newListForm">
+	<div class="row">
+		<form id="newListForm">
+			<div class="small-12 medium-7 columns">
+				<input name="title" type="text" placeholder="Name of Event" />
+			</div>
+			<div class="small-8 medium-3 columns">
+				<input name="date" type="text" id="datepicker" />
+			</div>
+			<div class="small-4 medium-2 columns">
+				<input type="submit" value="Add List" class="button" />
+			</div>
+		</form>
+	</div>
+</template>
