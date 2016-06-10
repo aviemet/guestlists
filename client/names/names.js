@@ -7,6 +7,7 @@ Template.Names.onCreated(function(){
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);
 	Meteor.subscribe('allLists');
+	Session.set('sort', 'firstName');
 });
  
 Template.Names.helpers({
@@ -39,11 +40,25 @@ Template.Names.helpers({
 				return regex.test(name.firstName) || regex.test(name.lastName);
 			});
 		}
-		return list.names;
+
+		// return list.names;
+		return _.sortBy(list.names, Session.get('sort'));
 	},
 	editingTitle(){
 		const instance = Template.instance();
 		return instance.state.get('editingTitle');
+	},
+	arrivedCount(){
+		let listId = FlowRouter.getParam("listId");
+		var list = Lists.findOne({_id: listId});
+
+		var count = 0;
+		if(list){
+			_.each(list.names, function(el){
+				if(el.arrived) count++;
+			});
+		}
+		return count;
 	}
 });
 
@@ -70,7 +85,7 @@ Template.Names.events({
 	'click #deleteAllNames'(e){
 		if(confirm('Are you sure?\nThis will delete all names on this list')){
 			let listId = FlowRouter.getParam("listId");
-			Meteor.call('Lists.deleteAllNames', listId);
+			Meteor.call('Lists.removeAllNames', listId);
 		}
 	},
 
@@ -97,7 +112,7 @@ Template.Names.events({
 
 Template.addNamesForm.onCreated(function(){
 	this.state = new ReactiveDict();
-	this.state.set('inputType', 'addNames');
+	this.state.set('inputType', 'filterNames');
 	Session.set('filterQuery', "");
 });
 
@@ -160,7 +175,10 @@ function handlePastedNames(input){
 	let listId = FlowRouter.getParam("listId");
 	let lines = input.split('\n');
 	$.each(lines, function(i, line){
-		namesArray.push(buildNameObject(line));
+		let name = buildNameObject(line);
+		if(name){
+			namesArray.push(name);			
+		}
 	});
 	Meteor.call('Lists.bulkAddNames', listId, namesArray);
 }

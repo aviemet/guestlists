@@ -20,6 +20,7 @@ Meteor.methods({
 			createdAt: new Date(),
 			names: []
 		});
+		return record;
 	},
 	'Lists.updateTitle'(listId, title){
 		check(listId, String);
@@ -54,7 +55,7 @@ Meteor.methods({
 
 		Lists.update({_id: listId}, {$pull: {names: {id: nameId}}});
 	},
-	'Lists.deleteAllNames'(listId){
+	'Lists.removeAllNames'(listId){
 		check(listId, String);
 
 		Lists.update({_id: listId}, {$set: {names: []}});

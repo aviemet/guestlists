@@ -31,7 +31,7 @@ th, td{
 }
 
 input{
-	&.transparent, &.transparent:focus{
+	&.transparent{
 		background: transparent;
 		font-size: 3rem;
 		text-align: center;
@@ -46,7 +46,7 @@ input{
 	a{
 		color: $battery-blue;
 
-		&#login-sign-in-link{
+		&#login-sign-in-link, &#login-name-link{
 			color: $white;
 		}
 	}

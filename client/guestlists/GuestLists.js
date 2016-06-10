@@ -27,7 +27,7 @@ Template.GuestLists.helpers({
 			return Lists.find({});
 		}
 		let today = moment().startOf('day').toDate();
-		return Lists.find({date: { $gte: today}});
+		return Lists.find({date: { $gte: today}}, {sort: {date: 1}});
 	}
 });
 
@@ -41,10 +41,16 @@ Template.GuestLists.events({
 		
 		const title = e.target.title.value;
 		const date = e.target.date.value;
-		console.log({title: title, date: date});
+
 		Meteor.call('Lists.insert', title, date);
 
 		e.target.title.value = "";
+	},
+
+	'click a.delete'(e){
+		let id = $(e.currentTarget).closest('tr').data('id');
+
+		Meteor.call('Lists.remove', id);
 	}
 });
 
