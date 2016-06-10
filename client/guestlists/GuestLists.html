@@ -5,12 +5,32 @@
 		<input type="checkbox" id="showPastEvents" name="showPastEvents" />
 		Show past events
 	</label>
-	
+
+
+	<div class="row">
+		<form id="newListForm">
+			<div class="small-12 medium-5 large-7 columns">
+				<input name="title" type="text" placeholder="Add An Event" />
+			</div>
+			<div class="small-8 medium-4 large-3 columns">
+				<div class="input-group">
+					<input name="date" type="text" id="datepicker" class="input-group-field" />
+					<span class="input-group-label"><i class="fa fa-calendar"></i></span>
+				</div>
+			</div>
+			<div class="small-4 medium-3 large-2 columns">
+				<input type="submit" value="- Add List -" class="button full" />
+			</div>
+			<textarea id="pasteable" style="display: none;"></textarea>
+		</form>
+	</div>
+
+
 	<table>
 		<thead>
 			<tr>
 				<th>Event Name</th>
-				<th>Date</th>
+				<th class="date center">Date</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -19,27 +39,12 @@
 			{{/each}}
 		</tbody>
 	</table>
+
 </template>
 
 <template name="SingleList">
 	<tr>
 		<td><a href="/lists/{{_id}}">{{title}}</a></td>
-		<td>{{formatDate date}}</td>
+		<td class="date">{{formatDate date}}</td>
 	</tr>
-</template>
-
-<template name="newListForm">
-	<div class="row">
-		<form id="newListForm">
-			<div class="small-12 medium-7 columns">
-				<input name="title" type="text" placeholder="Name of Event" />
-			</div>
-			<div class="small-8 medium-3 columns">
-				<input name="date" type="text" id="datepicker" />
-			</div>
-			<div class="small-4 medium-2 columns">
-				<input type="submit" value="Add List" class="button" />
-			</div>
-		</form>
-	</div>
 </template>

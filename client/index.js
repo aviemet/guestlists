@@ -7,3 +7,8 @@ import { Lists } from '../collections/Lists.js';
 import './guestlists/GuestLists.js';
 
 BlazeLayout.setRoot('#wrapper');
+
+// Global Helpers //
+Template.registerHelper('formatDate', function(date) {
+	return moment(date).format('M/D/YY');
+});

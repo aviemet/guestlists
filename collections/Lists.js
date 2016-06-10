@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { UUID } from '../lib/utils';
+import { buildNameObject } from '../lib/utils';
 
 const Lists = new Meteor.Collection('lists');
 
@@ -21,6 +21,12 @@ Meteor.methods({
 			names: []
 		});
 	},
+	'Lists.updateTitle'(listId, title){
+		check(listId, String);
+		check(title, String);
+
+		Lists.update({_id: listId}, {$set: {title: title}});
+	},
 	'Lists.remove'(listId){
 		check(listId, String);
 
@@ -29,34 +35,29 @@ Meteor.methods({
 	'Lists.addName'(listId, name){
 		check(listId, String);
 		check(name, String);
-		
-		let nameObj = {
-			id: UUID(),
-			createdAt: new Date(),
-			arrived: false,
-			plus: 0
-		}
-	
-		
-		let plus = name.match(/(\d)/);
-		if(plus){
-			nameObj.plus = plus[0];
-		}
-		
-		let matches = name.match(/([a-zA-Z'\.\-]+(?:-[a-zA-Z'\.\-]+)?),\s*([a-zA-Z'\.\-]+)(?:\s+([a-zA-Z'\.\-](?=\.)|[a-zA-Z'\.\-]+(?:-[a-zA-Z'\.\-]+)?))?|([a-zA-Z'\.\-]+)\s+(?:([a-zA-Z'\.\-](?=\.)|[a-zA-Z'\.\-]+(?:-[a-zA-Z'\.\-]+)?)\s+)?([a-zA-Z'\.\-]+(?:-[a-zA-Z'\.\-]+)?)/);
-		nameObj.firstName = matches[2] || matches[4];
-		nameObj.lastName = matches[1] || matches[6];
 
-		console.log(nameObj);
+		let nameObj = buildNameObject(name);
 		
 		Lists.update({_id: listId}, {$push: {names: nameObj}});
+	},
+	'Lists.bulkAddNames'(listId, names){
+		check(listId, String);
+		check(names, Array);
+
+		console.log(names);
+
+		Lists.update({_id: listId}, {$addToSet: {names: {$each: names}}});
 	},
 	'Lists.removeName'(listId, nameId){
 		check(listId, String);
 		check(nameId, String);
-		console.log({nameId: nameId});
 
 		Lists.update({_id: listId}, {$pull: {names: {id: nameId}}});
+	},
+	'Lists.deleteAllNames'(listId){
+		check(listId, String);
+
+		Lists.update({_id: listId}, {$set: {names: []}});
 	},
 	'Lists.setArchived'(listId, setArchived){
 		check(listId, String);

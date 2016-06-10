@@ -1,37 +1,72 @@
 <template name="Names">
-	<h1>{{list.title}}</h1>
-	
+	{{#if editingTitle}}
+		<h1><input type="text" name="title" id="listTitleInput" value="{{list.title}}" class="transparent" /></h1>
+	{{else}}
+		<h1 id="listTitle">{{list.title}}</h1>
+	{{/if}}
+
+	{{> addNamesForm}}
+
 	<table>
 		<thead>
 			<tr>
-				<th>Arrived</th>
+				<th class="arrived">Arrived</th>
 				<th>First Name</th>
 				<th>Last Name</th>
-				<th>+</th>
-				<th>Actions</th>
+				<th class="plus">+</th>
+				<th colspan="2">
+					<a class="alert" id="deleteAllNames">Clear List</a>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
-			{{#each list.names}}
-				<tr class="{{#if arrived}}arrived{{/if}}">
-					<td><input type="checkbox" class="arrivedChecker" checked="{{arrived}}" value="{{id}}" /></td>
-					<td>{{firstName}}</td>
-					<td>{{lastName}}</td>
-					<td>{{plus}}</td>
-					<td>
-						<div class="button-group">
-							<button class="button success" value="{{id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-							<button class="button alert" value="{{id}}"><i class="fa fa-times" aria-hidden="true"></i></button>
-						</div>
-					</td>
+			{{#if list.names.length}}
+
+				{{#each names}}
+					<tr class="{{#if arrived}}arrived{{/if}}" data-id="{{id}}">
+						<td class="arrived"><input type="checkbox" class="arrivedChecker" checked="{{arrived}}" /></td>
+						<td class="f_name">{{firstName}}</td>
+						<td class="l_name">{{lastName}}</td>
+						<td class="plus">{{plus}}</td>
+						<td class="actions">
+							<a class="edit success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+						</td>
+						<td class="actions">
+							<a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i></a>
+						</td>
+					</tr>
+				{{/each}}
+
+			{{else}}
+				<tr>
+					<td class="arrived">&nbsp;</td>
+					<td colspan="3"><center>Add names to this guest list using the input above</center></td>
+					<td class="actions">&nbsp;</td>
+					<td class="actions">&nbsp;</td>
 				</tr>
-			{{/each}}
+			{{/if}}
 		</tbody>
 	</table>
 </template>
 
 <template name="addNamesForm">
 	<form id="addNamesForm">
-		<input name="name" type="text" placeholder="Guest Name +1" />
+		<div class="input-group">
+			<span class="input-group-button" style="width: 130px;">
+				<select id="inputSelect">
+					<option value="addNames">Add Names</option>
+					<option value="filter">Filter</option>
+				</select>
+			</span>
+			{{#if inputType "addNames"}}
+				<input name="name" id="namesInput" type="text" placeholder="Guest Name +1" class="input-group-field" />
+			{{else}}
+				<input name="filter" id="filterInput" type="text" placeholder="Filter Results" class="input-group-field" />
+				<a class="button input-group-button primary" id="clearFilter">- Clear -</a>
+			{{/if}}
+		</div>
 	</form>
+	<div class="hidden">
+		<textarea id="pasteableInput"></textarea>
+	</div>
 </template>

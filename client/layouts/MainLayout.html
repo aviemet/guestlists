@@ -1,24 +1,17 @@
 <template name="MainLayout">
 
 	<div class="top-bar">
-		<div class="top-bar-left">
-			<ul class="dropdown menu" data-dropdown-menu>
-				<li class="menu-text"><a href="/lists">Guest Lists</a></li>
-				<li>{{> loginButtons}}</li>
-			</ul>
-		</div>
-		<div class="top-bar-right">
-			<ul class="menu">
-				<li><input type="search" placeholder="Search"></li>
-				<li><button type="button" class="button">Search</button></li>
-			</ul>
+		<div class="row">
+			<div class="top-bar-left">
+				<a href="/lists">Guest Lists</a>
+			</div>
+			<div class="top-bar-right">
+				{{> loginButtons}}
+			</div>
 		</div>
 	</div>
 	
 	<main class="row column">
-		<div id="inputs">
-			{{> Template.dynamic template=form}}
-		</div>
 		<div id="content">
 			{{> Template.dynamic template=content}}
 		</div>
