@@ -40,3 +40,14 @@ input{
 		margin: 1px 0 10px 0;
 	}
 }
+
+#login-buttons{
+	color: $black;
+	a{
+		color: $battery-blue;
+
+		&#login-sign-in-link{
+			color: $white;
+		}
+	}
+}
