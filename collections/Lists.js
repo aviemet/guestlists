@@ -28,6 +28,12 @@ Meteor.methods({
 
 		Lists.update({_id: listId}, {$set: {title: title}});
 	},
+	'Lists.updateDate'(listId, date){
+		check(listId, String);
+		check(date, Date);
+
+		Lists.update({_id: listId}, {$set: {date: date}});
+	},
 	'Lists.remove'(listId){
 		check(listId, String);
 

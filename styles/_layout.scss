@@ -6,6 +6,31 @@ h1{
 	}
 }
 
+table tbody tr.past{
+	background-color: #FFE0E0;
+
+	&:nth-child(even) {
+		background-color: #FECCCC;
+	}
+
+	td.date{
+		color: $dark-gray;
+		font-style: italic;
+	}
+}
+
+td{
+	&.date{
+		position: relative;
+
+		.pickerContainer{
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+	}
+}
+
 th, td{
 	&.date{
 		width: 100px;

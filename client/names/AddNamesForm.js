@@ -19,7 +19,6 @@ Template.addNamesForm.onCreated(function(){
  */
 function waitForSubscription(subscription, cb){
 	setTimeout(function(){
-		console.log(subscription.ready());
 		if(subscription.ready()){
 			cb();
 		} else {
@@ -76,13 +75,12 @@ Template.addNamesForm.events({
 
 	'change #inputSelect'(e){
 		const instance = Template.instance();
-		
 		instance.state.set('inputType', e.currentTarget.value);
+		Session.set('filterQuery', "");
 	},
 
 	'keyup #filterInput'(e){
 		let val = e.currentTarget.value;
-
 		Session.set('filterQuery', val);
 	},
 

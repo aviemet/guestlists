@@ -1,7 +1,7 @@
 <template name="GuestLists">
 	<h1>Upcoming Events</h1>
 	
-	<label for="showPastEvents">
+	<label for="showPastEvents" style="display: inline-block;">
 		<input type="checkbox" id="showPastEvents" name="showPastEvents" />
 		Show past events
 	</label>
@@ -25,8 +25,7 @@
 		</form>
 	</div>
 
-
-	<table>
+	<table id="guestListTable">
 		<thead>
 			<tr>
 				<th>Event Name</th>
@@ -36,19 +35,22 @@
 		</thead>
 		<tbody>
 			{{#each lists}}
-				{{> SingleList}}
+				
+				<tr class="{{#if past date}}past{{/if}}" data-id="{{_id}}">
+					<td><a href="/lists/{{_id}}">{{title}}</a></td>
+					<td class="date">
+						{{formatDate date}}
+						<div class="pickerContainer">
+							<input type="hidden" name="date" value="{{date}}" />
+						</div>
+					</td>
+					<td class="actions">
+						<a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i></a>
+					</td>
+				</tr>
+
 			{{/each}}
 		</tbody>
 	</table>
 
-</template>
-
-<template name="SingleList">
-	<tr data-id="{{_id}}">
-		<td><a href="/lists/{{_id}}">{{title}}</a></td>
-		<td class="date">{{formatDate date}}</td>
-		<td class="actions">
-			<a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i></a>
-		</td>
-	</tr>
 </template>

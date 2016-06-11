@@ -6,7 +6,9 @@ Template.Names.onCreated(function(){
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);
 	Meteor.subscribe('allLists');
-	Session.set('sort', 'firstName');
+	if(!Session.get('sort')){
+		Session.set('sort', 'firstName');
+	}
 });
  
 Template.Names.helpers({
@@ -82,7 +84,8 @@ Template.Names.events({
 	},
 
 	'click #deleteAllNames'(e){
-		if(confirm('Are you sure?\nThis will delete all names on this list')){
+		let count = parseInt($(".count .total").html());
+		if(count > 0 && confirm('Are you sure?\nThis will delete all names on this list')){
 			let listId = FlowRouter.getParam("listId");
 			Meteor.call('Lists.removeAllNames', listId);
 		}
