@@ -1,0 +1,21 @@
+<template name="addNamesForm">
+	<form id="addNamesForm">
+		<div class="input-group">
+			<span class="input-group-button" style="width: 130px;">
+				<select id="inputSelect">
+					<option value="addNames" id="addNames">Add Names</option>
+					<option value="filterNames" id="filterNames">Filter</option>
+				</select>
+			</span>
+			{{#if inputType "addNames"}}
+				<input name="name" id="namesInput" type="text" placeholder="Guest Name +1" class="input-group-field" />
+			{{else}}
+				<input name="filter" id="filterInput" type="text" placeholder="Filter Names" class="input-group-field" />
+				<a class="button input-group-button primary" id="clearFilter">- Clear -</a>
+			{{/if}}
+		</div>
+	</form>
+	<div class="hidden">
+		<textarea id="pasteableInput"></textarea>
+	</div>
+</template>

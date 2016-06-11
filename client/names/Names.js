@@ -1,5 +1,4 @@
 import Lists from '../../collections/Lists.js';
-import { buildNameObject } from '../../lib/utils';
 
 import './Names.html';
 
@@ -21,7 +20,7 @@ Template.Names.helpers({
 		var filter = Session.get('filterQuery');
 		var list = Lists.findOne({_id: listId});
 
-		if(filter && filter != ""){
+		if(filter != ""){
 			// Build regex for search terms
 			let terms = filter.trim().split(' ');
 
@@ -109,76 +108,3 @@ Template.Names.events({
 		instance.state.set('editingTitle', false);
 	}
 });
-
-Template.addNamesForm.onCreated(function(){
-	this.state = new ReactiveDict();
-	this.state.set('inputType', 'filterNames');
-	Session.set('filterQuery', "");
-});
-
-Template.addNamesForm.helpers({
-	inputType(type){
-		const instance = Template.instance();
-		return type === instance.state.get('inputType');
-	}
-});
-
-Template.addNamesForm.events({
-	/////////////////
-	// Form Events //
-	/////////////////
-	'submit #addNamesForm'(e){
-		e.preventDefault();
-		
-		if(e.target.name){
-			let name = e.target.name.value.trim();
-			let listId = FlowRouter.getParam("listId");
-
-			if(name !== ""){
-				Meteor.call('Lists.addName', listId, name);
-			}
-
-			e.target.name.value = "";
-		}
-	},
-
-	'paste #namesInput'(e){
-		$("#pasteableInput").focus();
-		setTimeout(function(){
-			handlePastedNames($("#pasteableInput").val());
-			$("#pasteableInput").val("");
-			$("#namesInput").focus();
-		}, 0);
-	},
-
-	'change #inputSelect'(e){
-		const instance = Template.instance();
-		
-		instance.state.set('inputType', e.currentTarget.value);
-	},
-
-	'keyup #filterInput'(e){
-		let val = e.currentTarget.value;
-
-		Session.set('filterQuery', val);
-	},
-
-	'click #clearFilter'(e){
-		$("#filterInput").val('');
-		Session.set('filterQuery', '');
-	}
-});
-
-function handlePastedNames(input){
-	var namesArray = [];
-
-	let listId = FlowRouter.getParam("listId");
-	let lines = input.split('\n');
-	$.each(lines, function(i, line){
-		let name = buildNameObject(line);
-		if(name){
-			namesArray.push(name);			
-		}
-	});
-	Meteor.call('Lists.bulkAddNames', listId, namesArray);
-}
