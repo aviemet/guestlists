@@ -7,7 +7,7 @@ Template.Names.onCreated(function(){
 	this.state.set('editingTitle', false);
 	Meteor.subscribe('allLists');
 	// Ensure Session variable purity
-	if(!Session.get('sort') || !Session.get('sort').hasOwnProperty('term') || !Session.get('sort').hasOwnProperty('descending')){
+	if(_.isEmpty(!Session.get('sort')) || !Session.get('sort').hasOwnProperty('term') || !Session.get('sort').hasOwnProperty('descending')){
 		Session.set('sort', {term: 'firstName', descending: true});
 	}
 });
