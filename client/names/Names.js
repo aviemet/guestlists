@@ -1,4 +1,5 @@
 import Lists from '../../collections/Lists.js';
+import { stringToTerms } from '../../lib/utils';
 
 import './Names.html';
 
@@ -20,27 +21,21 @@ Template.Names.helpers({
 		return list;
 	},
 	names(){
+		const instance = Template.instance();
+		
 		let listId = FlowRouter.getParam("listId");
 		var filter = Session.get('filterQuery');
 		var list = Lists.findOne({_id: listId});
-
-		if(filter !== ""){
-			// Build regex for search terms
-			let terms = filter.trim().split(' ');
-
-			var pattern = "";
-			for(var i = 0; i < terms.length; i++){
-				pattern += terms[i];
-				if(i < terms.length - 1){
-					pattern += "|";
-				}
-			}
-
+		var showArrivedGuests = instance.state.get('showArrivedGuests');
+		
+		if(filter !== "" || !showArrivedGuests){			
+			var pattern = stringToTerms(filter);
 			var regex = new RegExp(pattern, 'i');
 
 			// Filter results by search terms
 			list.names = _.filter(list.names, function(name){
-				return (regex.test(name.firstName) || regex.test(name.lastName));
+				if(!showArrivedGuests && name.arrived) return false;
+				return (regex.test(name.firstName.tokenize()) || regex.test(name.lastName.tokenize()));
 			});
 		}
 
@@ -66,10 +61,6 @@ Template.Names.helpers({
 });
 
 Template.Names.events({
-	'click .edit'(e){
-		// console.log(e.currentTarget.value);
-	},
-
 	'click .delete'(e){
 		let listId = FlowRouter.getParam("listId");
 		let nameId = $(e.currentTarget).closest('tr').data('id');
@@ -79,9 +70,8 @@ Template.Names.events({
 	
 	'change input.arrivedChecker'(e){
 		let listId = FlowRouter.getParam("listId");
-		let nameId = $(e.currentTarget).closest('tr').data('id');
+		let nameId = e.currentTarget.id.replace('name', '');
 		let arrived = e.currentTarget.checked;
-		
 		Meteor.call('Lists.toggleNameArrived', listId, nameId, arrived);
 	},
 
@@ -148,5 +138,11 @@ Template.Names.events({
 				$(this).attr('disabled', true);
 			});
 		}
+	},
+	
+	'change #showArrivedGuests'(e){
+		const instance = Template.instance();
+		let state = instance.state.get('showArrivedGuests');
+		instance.state.set('showArrivedGuests', !state);
 	}
 });

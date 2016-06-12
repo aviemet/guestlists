@@ -11,7 +11,7 @@
 		<div class="small-6 columns">
 			<label for="showArrivedGuests">
 				<input type="checkbox" id="showArrivedGuests" name="showArrivedGuests" />
-				Show Arrived Guests
+				<label for="showArrivedGuests">Show Arrived Guests</label>				
 			</label>
 		</div>
 		<div class="small-6 columns right">
@@ -35,7 +35,7 @@
 			{{#if list.names.length}}
 
 				{{#each names}}
-					<tr class="{{#if arrived}}arrived{{/if}}" data-id="{{id}}">
+					<tr class="{{#if arrived}}arrivedChecked{{/if}}" data-id="{{id}}">
 						<td class="arrived">
 							<input type="checkbox" class="arrivedChecker" checked="{{arrived}}" id="name{{id}}" />
 							<label for="name{{id}}"></label>

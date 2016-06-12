@@ -20,7 +20,7 @@ table tbody tr.past{
 }
 
 tr{
-	&.arrived{
+	&.arrivedChecked{
 		color: $medium-gray;
 
 		input{
