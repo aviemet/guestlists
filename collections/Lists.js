@@ -7,7 +7,7 @@ const Lists = new Meteor.Collection('lists');
 Meteor.methods({
 	'Lists.insert'(title, date){
 		check(title, String);
-		check(date, String);
+		check(date, Date);
 
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
@@ -15,7 +15,7 @@ Meteor.methods({
 
 		let record = Lists.insert({
 			title: title,
-			date: new Date(date),
+			date: date,
 			creator: this.userId,
 			createdAt: new Date(),
 			names: []

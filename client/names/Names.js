@@ -6,9 +6,9 @@ Template.Names.onCreated(function(){
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);
 	Meteor.subscribe('allLists');
-	// Ensure Session variable purity
-	if(_.isEmpty(Session.get('sort')) || !Session.get('sort').hasOwnProperty('term') || !Session.get('sort').hasOwnProperty('descending')){
-		Session.set('sort', {term: 'firstName', descending: true});
+	// Ensure Session variable purity (for some reason)
+	if(_.isEmpty(Session.get('sortNames')) || !Session.get('sortNames').hasOwnProperty('term') || !Session.get('sortNames').hasOwnProperty('descending')){
+		Session.set('sortNames', {term: 'firstName', descending: true});
 	}
 });
  
@@ -23,7 +23,7 @@ Template.Names.helpers({
 		var filter = Session.get('filterQuery');
 		var list = Lists.findOne({_id: listId});
 
-		if(filter != ""){
+		if(filter !== ""){
 			// Build regex for search terms
 			let terms = filter.trim().split(' ');
 
@@ -43,8 +43,8 @@ Template.Names.helpers({
 			});
 		}
 
-		let names = _.sortBy(list.names, Session.get('sort').term);
-		return Session.get('sort').descending ? names : names.reverse();
+		let names = _.sortBy(list.names, Session.get('sortNames').term);
+		return Session.get('sortNames').descending ? names : names.reverse();
 	},
 	editingTitle(){
 		const instance = Template.instance();
@@ -114,14 +114,18 @@ Template.Names.events({
 
 	'click #namesTable th.sortable'(e){
 		let data = $(e.currentTarget).data('sort');
-		let sort = Session.get('sort');
+		let sort = Session.get('sortNames');
 
 		if(sort.term === data){
 			sort.descending = !sort.descending;
-			Session.set('sort', sort);
+			Session.set('sortNames', sort);
 		} else {
 			sort = {term: data, descending: true};
-			Session.set('sort', sort);
+			Session.set('sortNames', sort);
 		}	
+	},
+	
+	'click #namesTable input.editable'(e){
+		$(e.currentTarget).prop("disabled", false);
 	}
 });

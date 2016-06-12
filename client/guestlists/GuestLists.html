@@ -28,8 +28,8 @@
 	<table id="guestListTable">
 		<thead>
 			<tr>
-				<th>Event Name</th>
-				<th class="date center">Date</th>
+				<th class="sortable" data-sort="title">Event Name</th>
+				<th class="date center sortable" data-sort="date">Date</th>
 				<th>&nbsp;</th>
 			</tr>
 		</thead>
@@ -39,10 +39,7 @@
 				<tr class="{{#if past date}}past{{/if}}" data-id="{{_id}}">
 					<td><a href="/lists/{{_id}}">{{title}}</a></td>
 					<td class="date">
-						{{formatDate date}}
-						<div class="pickerContainer">
-							<input type="hidden" name="date" value="{{date}}" />
-						</div>
+						<input type="text" name="date" value="{{formatDate date}}" data-value="{{date}}" class="pikaday" disabled />
 					</td>
 					<td class="actions">
 						<a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i></a>

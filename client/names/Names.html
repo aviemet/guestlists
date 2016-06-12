@@ -31,8 +31,12 @@
 				{{#each names}}
 					<tr class="{{#if arrived}}arrived{{/if}}" data-id="{{id}}">
 						<td class="arrived"><input type="checkbox" class="arrivedChecker" checked="{{arrived}}" /></td>
-						<td class="f_name">{{firstName}}</td>
-						<td class="l_name">{{lastName}}</td>
+						<td class="f_name">
+							<input class="editable" type="text" name="firstName" value="{{firstName}}" disabled />
+						</td>
+						<td class="l_name">
+							<input class="editable" type="text" name="firstName" value="{{lastName}}" disabled />
+						</td>
 						<td class="plus">{{plus}}</td>
 						<td class="actions">
 							<a class="edit success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

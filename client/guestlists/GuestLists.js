@@ -1,3 +1,4 @@
+import { Template } from 'meteor/templating';
 import Lists from '../../collections/Lists.js';
 
 import './GuestLists.html';
@@ -6,13 +7,17 @@ import './GuestLists.html';
 Template.GuestLists.onCreated(function(){
 	this.state = new ReactiveDict();
 	Meteor.subscribe('allLists');
+	// Ensure Session variable purity (for some reason)
+	if(_.isEmpty(Session.get('sortLists')) || !Session.get('sortLists').hasOwnProperty('term') || !Session.get('sortLists').hasOwnProperty('descending')){
+		Session.set('sortLists', {term: 'date', descending: false});
+	}
 });
 
 // NewListForm Template
 Template.GuestLists.rendered = function(){
 	this.newListPicker = new Pikaday({ 
 		field: document.getElementById('datepicker'),
-		format: 'MM/DD/YYYY',
+		format: 'M/D/YY',
 		minDate: moment().toDate(),
 		defaultDate: moment().toDate(),
 		setDefaultDate: moment().toDate()
@@ -22,12 +27,14 @@ Template.GuestLists.rendered = function(){
 Template.GuestLists.helpers({
 	lists(){	
 		const instance = Template.instance();
+		let session = Session.get('sortLists');
+		var options = {sort: {[session.term]: session.descending ? 1 : -1}};
 		
 		if(instance.state.get('showPastEvents')){
-			return Lists.find({}, {sort: {date: 1}});
+			return Lists.find({}, options);
 		}
 		let today = moment().startOf('day').toDate();
-		return Lists.find({date: { $gte: today}}, {sort: {date: 1}});
+		return Lists.find({date: { $gte: today}}, options);
 	},
 	past(date){
 		let today = moment().startOf('day').toDate();
@@ -43,8 +50,10 @@ Template.GuestLists.events({
 	'submit #newListForm'(e){
 		event.preventDefault();
 		
+		const instance = Template.instance();
+		
 		const title = e.target.title.value;
-		const date = e.target.date.value;
+		const date = instance.newListPicker.getDate();
 
 		Meteor.call('Lists.insert', title, date);
 
@@ -59,30 +68,34 @@ Template.GuestLists.events({
 	},
 
 	'click #guestListTable td.date'(e, instance){
-		if($(e.currentTarget).hasClass('pikaday')){
-
-		} else {
-			$(e.currentTarget).addClass('pikaday');
+		if(!instance.editListPicker || !instance.editListPicker.isVisible()){
 			instance.editListPicker = new Pikaday({
 				field: $(e.currentTarget).find('input')[0],
-				format: 'MM/DD/YYYY',
-				bound: false,
-				container: $(e.currentTarget).find('.pickerContainer'),
+				format: 'M/D/YY',
+				defaultDate: moment(new Date($(e.currentTarget).find('input').data('value'))),
+				setDefaultDate: true,
 				onSelect: function(date) {
 					let listId = $(e.currentTarget).closest('tr').data('id');
 					Meteor.call('Lists.updateDate', listId, date);
+				},
+				onClose: function(){
 					instance.editListPicker.destroy();
-					$(e.currentTarget).removeClass('pikaday');
 				}
 			});
 			instance.editListPicker.show();
-			console.log({
-				picker: instance.editListPicker,
-				visible: instance.editListPicker.isVisible(),
-				date: instance.editListPicker.getDate()
-			});
+		}
+	},
+
+	'click #guestListTable th.sortable'(e){
+		let data = $(e.currentTarget).data('sort');
+		let sort = Session.get('sortLists');
+
+		if(sort.term === data){
+			sort.descending = !sort.descending;
+			Session.set('sortLists', sort);
+		} else {
+			sort = {term: data, descending: false};
+			Session.set('sortLists', sort);
 		}
 	}
 });
-
-

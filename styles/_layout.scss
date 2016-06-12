@@ -22,11 +22,16 @@ table tbody tr.past{
 td{
 	&.date{
 		position: relative;
+	}
 
-		.pickerContainer{
-			position: absolute;
-			right: 0;
-		}
+	input:disabled{
+		background: none;
+		border: none;
+		margin: 0;
+		padding: 0;
+		outline: 0;
+		box-shadow: none;
+		cursor: pointer;
 	}
 }
 
