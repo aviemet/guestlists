@@ -35,9 +35,10 @@
 			{{#if list.names.length}}
 
 				{{#each names}}
+					{{log arrived}}
 					<tr class="{{#if arrived}}arrivedChecked{{/if}}" data-id="{{id}}">
 						<td class="arrived">
-							<input type="checkbox" class="arrivedChecker" checked="{{arrived}}" id="name{{id}}" />
+							<input type="checkbox" class="arrivedChecker" checked={{arrived}} id="name{{id}}" value="{{id}}"/>
 							<label for="name{{id}}"></label>
 						</td>
 						<td class="f_name">

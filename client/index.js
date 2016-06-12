@@ -12,3 +12,7 @@ BlazeLayout.setRoot('#wrapper');
 Template.registerHelper('formatDate', function(date) {
 	return moment(date).format('M/D/YY');
 });
+
+Template.registerHelper('log', function(term){
+	console.log(term);
+});
