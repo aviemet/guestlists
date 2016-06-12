@@ -5,6 +5,7 @@ import './Names.html';
 Template.Names.onCreated(function(){
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);
+	this.state.set('showArrivedGuests', false);
 	Meteor.subscribe('allLists');
 	// Ensure Session variable purity (for some reason)
 	if(_.isEmpty(Session.get('sortNames')) || !Session.get('sortNames').hasOwnProperty('term') || !Session.get('sortNames').hasOwnProperty('descending')){
@@ -39,7 +40,7 @@ Template.Names.helpers({
 
 			// Filter results by search terms
 			list.names = _.filter(list.names, function(name){
-				return regex.test(name.firstName) || regex.test(name.lastName);
+				return (regex.test(name.firstName) || regex.test(name.lastName));
 			});
 		}
 
@@ -112,7 +113,7 @@ Template.Names.events({
 		instance.state.set('editingTitle', false);
 	},
 
-	'click #namesTable th.sortable'(e){
+	'click #namesTable th.sortable span'(e){
 		let data = $(e.currentTarget).data('sort');
 		let sort = Session.get('sortNames');
 
@@ -125,7 +126,27 @@ Template.Names.events({
 		}	
 	},
 	
-	'click #namesTable input.editable'(e){
-		$(e.currentTarget).prop("disabled", false);
+	'click #namesTable td.f_name'(e){
+		if(!$(e.currentTarget).closest('tr').hasClass('arrived')){
+			var $input = $(e.currentTarget).find('input').attr('disabled', false);
+			setTimeout(function(){
+				$input.focus();
+			}, 10);
+			$input.one('blur', function(){
+				$(this).attr('disabled', true);
+			});
+		}
+	},
+	
+	'click #namesTable td.l_name'(e){
+		if(!$(e.currentTarget).closest('tr').hasClass('arrived')){
+			var $input = $(e.currentTarget).find('input').attr('disabled', false);
+			setTimeout(function(){
+				$input.focus();
+			}, 10);
+			$input.one('blur', function(){
+				$(this).attr('disabled', true);
+			});
+		}
 	}
 });

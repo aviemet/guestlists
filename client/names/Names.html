@@ -8,7 +8,13 @@
 	{{> addNamesForm}}
 
 	<div class="row">
-		<div class="small-12 columns right">
+		<div class="small-6 columns">
+			<label for="showArrivedGuests">
+				<input type="checkbox" id="showArrivedGuests" name="showArrivedGuests" />
+				Show Arrived Guests
+			</label>
+		</div>
+		<div class="small-6 columns right">
 			<span class="count"> <span class="arrived">{{arrivedCount}}</span> / <span class="total">{{list.names.length}}</span></span>
 		</div>
 	</div>
@@ -16,12 +22,12 @@
 	<table id="namesTable">
 		<thead>
 			<tr>
-				<th class="arrived">Arrived</th>
-				<th class="sortable" data-sort="firstName">First Name</th>
-				<th class="sortable" data-sort="lastName">Last Name</th>
-				<th class="plus">+</th>
-				<th colspan="2">
-					<a class="alert" id="deleteAllNames">Clear List</a>
+				<th class="arrived"><i class="fa fa-check" aria-hidden="true"></i></th>
+				<th class="sortable"><span data-sort="firstName">First Name</span></th>
+				<th class="sortable"><span data-sort="lastName">Last Name</span></th>
+				<th class="plus"><i class="fa fa-users" aria-hidden="true"></i></th>
+				<th>
+					<a class="alert" id="deleteAllNames"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
 				</th>
 			</tr>
 		</thead>
@@ -30,7 +36,10 @@
 
 				{{#each names}}
 					<tr class="{{#if arrived}}arrived{{/if}}" data-id="{{id}}">
-						<td class="arrived"><input type="checkbox" class="arrivedChecker" checked="{{arrived}}" /></td>
+						<td class="arrived">
+							<input type="checkbox" class="arrivedChecker" checked="{{arrived}}" id="name{{id}}" />
+							<label for="name{{id}}"></label>
+						</td>
 						<td class="f_name">
 							<input class="editable" type="text" name="firstName" value="{{firstName}}" disabled />
 						</td>
@@ -38,9 +47,6 @@
 							<input class="editable" type="text" name="firstName" value="{{lastName}}" disabled />
 						</td>
 						<td class="plus">{{plus}}</td>
-						<td class="actions">
-							<a class="edit success"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-						</td>
 						<td class="actions">
 							<a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i></a>
 						</td>

@@ -37,21 +37,6 @@ table {
 		 position: relative;
 		 padding: 5px 10px;
 	}
-
-	tr{
-		&.arrived{
-			color: $medium-gray;
-			
-			td:before {
-				content: " ";
-				position: absolute;
-				top: 50%;
-				left: 0;
-				border-bottom: 1px solid #111;
-				width: 100%;
-			}
-		}
-	}
 }
 
 .button{
