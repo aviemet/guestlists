@@ -28,16 +28,14 @@ Template.Names.helpers({
 		var list = Lists.findOne({_id: listId});
 		var showArrivedGuests = instance.state.get('showArrivedGuests');
 		
-// 		if(filter !== "" || !showArrivedGuests){			
-		if(!showArrivedGuests){
-// 			var pattern = stringToTerms(filter);
-// 			var regex = new RegExp(pattern, 'i');
+		if(filter !== "" || !showArrivedGuests){	
+			var pattern = stringToTerms(filter);
+			var regex = new RegExp(pattern, 'i');
 
 			// Filter results by search terms
 			list.names = _.filter(list.names, function(name){
-				return !name.arrived;
-// 				if(!showArrivedGuests && name.arrived) return false;
-// 				return (regex.test(name.firstName.tokenize()) || regex.test(name.lastName.tokenize()));
+				if(!showArrivedGuests && name.arrived) return false;
+				return (regex.test(name.firstName.tokenize()) || regex.test(name.lastName.tokenize()));
 			});
 		}
 
