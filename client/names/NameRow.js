@@ -27,8 +27,8 @@ Template.NameRow.events({
 		let listId = FlowRouter.getParam("listId");
 		let nameId = e.currentTarget.value;
 		let arrived = e.currentTarget.checked;
-		
-		if(arrived){
+		console.log(arrived);
+		if(!Session.get('showArrivedGuests') && arrived){
 			$(e.currentTarget).closest('tr').fadeOut(function(){			
 				Meteor.call('Lists.toggleNameArrived', listId, nameId, arrived);
 			});
