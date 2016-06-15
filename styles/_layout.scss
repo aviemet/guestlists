@@ -49,7 +49,11 @@ td{
 		padding: 9px 5px 0px 5px;
 	}
 
-	input[type=text]{
+	&.ticker{
+		width: 70px;
+	}
+
+	input[type=text], input[type=number]{
 		margin: 0 !important;
 		padding-right: 0 !important;
 
@@ -81,6 +85,10 @@ th, td{
 
 	&.plus{
 		width: 40px;
+		text-align: center;
+	}
+
+	&.ticker{
 		text-align: center;
 	}
 }

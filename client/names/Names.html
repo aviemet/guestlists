@@ -25,7 +25,7 @@
 				<th class="arrived"><i class="fa fa-check" aria-hidden="true"></i></th>
 				<th class="sortable"><span data-sort="firstName">First Name</span></th>
 				<th class="sortable"><span data-sort="lastName">Last Name</span></th>
-				<th class="plus"><i class="fa fa-users" aria-hidden="true"></i></th>
+				<th class="ticker" colspan="2"><i class="fa fa-users" aria-hidden="true"></i></th>
 				<th>
 					<a class="alert" id="deleteAllNames"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>
 				</th>
@@ -34,24 +34,8 @@
 		<tbody>
 			{{#if list.names.length}}
 
-				{{#each names}}
-					{{log arrived}}
-					<tr class="{{#if arrived}}arrivedChecked{{/if}}" data-id="{{id}}">
-						<td class="arrived">
-							<input type="checkbox" class="arrivedChecker" checked={{arrived}} id="name{{id}}" value="{{id}}"/>
-							<label for="name{{id}}"></label>
-						</td>
-						<td class="f_name">
-							<input class="editable" type="text" name="firstName" value="{{firstName}}" disabled />
-						</td>
-						<td class="l_name">
-							<input class="editable" type="text" name="firstName" value="{{lastName}}" disabled />
-						</td>
-						<td class="plus">{{plus}}</td>
-						<td class="actions">
-							<a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i></a>
-						</td>
-					</tr>
+				{{#each name in names}}
+					{{>NameRow name}}
 				{{/each}}
 
 			{{else}}

@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "hashids": "^1.0.2",
-    "meteor-node-stubs": "~0.2.0"
+    "meteor-node-stubs": "~0.2.0",
+    "sticky-table-headers": "^0.1.19"
   }
 }

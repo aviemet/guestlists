@@ -1,0 +1,21 @@
+<template name="NameRow">
+	<tr class="{{#if arrived}}arrivedChecked{{/if}}" data-id="{{_id}}">
+		<td class="arrived">
+			<input type="checkbox" class="arrivedChecker" {{checkArrived}} value="{{_id}}" id="name{{_id}}"/>
+			<label for="name{{_id}}"></label>
+		</td>
+		<td class="name">
+			<input class="editable" type="text" name="firstName" value="{{firstName}}" disabled />
+		</td>
+		<td class="name">
+			<input class="editable" type="text" name="lastName" value="{{lastName}}" disabled />
+		</td>
+		{{#with guests}}
+		<td class="plus">+{{expected}}</td>
+		<td class="ticker"><input type="number" value="{{arrived}}" min="0" /></td>
+		{{/with}}
+		<td class="actions">
+			<a class="delete alert"><i class="fa fa-times"></i></a>
+		</td>
+	</tr>
+</template>

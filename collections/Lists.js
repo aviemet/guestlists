@@ -59,7 +59,7 @@ Meteor.methods({
 		check(listId, String);
 		check(nameId, String);
 
-		Lists.update({_id: listId}, {$pull: {names: {id: nameId}}});
+		Lists.update({_id: listId}, {$pull: {names: {_id: nameId}}});
 	},
 	'Lists.removeAllNames'(listId){
 		check(listId, String);
@@ -79,12 +79,37 @@ Meteor.methods({
 
 		Lists.update({
 			"_id": listId,
-			"names.id": nameId
+			"names._id": nameId
 		}, {
 			"$set": {
 				'names.$.arrived': arrived
 			}
 		})
+	},
+	'Lists.updateArrivedGuests'(listId, nameId, guests){
+		check(listId, String);
+		check(nameId, String);
+		check(guests, Number);
+		
+		Lists.update({
+			"_id": listId,
+			"names._id": nameId
+		}, {
+			"$set": {
+				'names.$.guests.arrived': guests
+			}
+		});
+	},
+	'Lists.updateName'(listId, nameId, name){
+		check(listId, String);
+		check(nameId, String);
+		check(name, Object);
+		
+		var set = {"$set": {}}
+		_.each(name, function(val, key){
+			set.$set['names.$.'+key] = val;
+		});
+		Lists.update({ "_id": listId, "names._id": nameId }, set);
 	}
 });
 

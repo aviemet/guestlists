@@ -1,18 +1,28 @@
 import Lists from '../../collections/Lists.js';
 import { stringToTerms } from '../../lib/utils';
+import 'sticky-table-headers';
 
 import './Names.html';
 
 Template.Names.onCreated(function(){
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);
-	this.state.set('showArrivedGuests', false);
+	
+	Session.set('showArrivedGuests', false);
+	
 	Meteor.subscribe('allLists');
 	// Ensure Session variable purity (for some reason)
-	if(_.isEmpty(Session.get('sortNames')) || !Session.get('sortNames').hasOwnProperty('term') || !Session.get('sortNames').hasOwnProperty('descending')){
+	if(_.isEmpty(Session.get('sortNames')) || 
+		!Session.get('sortNames').hasOwnProperty('term') || 
+		!Session.get('sortNames').hasOwnProperty('descending')){
+		
 		Session.set('sortNames', {term: 'firstName', descending: true});
 	}
 });
+
+Template.Names.onRendered = function(){
+	$('#namesTable').stickyTableHeaders();
+};
  
 Template.Names.helpers({
 	list(){
@@ -24,11 +34,12 @@ Template.Names.helpers({
 		const instance = Template.instance();
 		
 		let listId = FlowRouter.getParam("listId");
+		var list = Lists.findOne({_id: listId}, {fields: {names: 1}});
+
 		var filter = Session.get('filterQuery');
-		var list = Lists.findOne({_id: listId});
-		var showArrivedGuests = instance.state.get('showArrivedGuests');
+		var showArrivedGuests = Session.get('showArrivedGuests');
 		
-		if(filter !== "" || !showArrivedGuests){	
+		if(filter !== "" || !showArrivedGuests){
 			var pattern = stringToTerms(filter);
 			var regex = new RegExp(pattern, 'i');
 
@@ -61,19 +72,6 @@ Template.Names.helpers({
 });
 
 Template.Names.events({
-	'click .delete'(e){
-		let listId = FlowRouter.getParam("listId");
-		let nameId = $(e.currentTarget).closest('tr').data('id');
-
-		Meteor.call('Lists.removeName', listId, nameId);
-	},
-	
-	'change input.arrivedChecker'(e){
-		let listId = FlowRouter.getParam("listId");
-		let nameId = e.currentTarget.value;
-		let arrived = e.currentTarget.checked;
-		Meteor.call('Lists.toggleNameArrived', listId, nameId, arrived);
-	},
 
 	'click #deleteAllNames'(e){
 		let count = parseInt($(".count .total").html());
@@ -116,33 +114,9 @@ Template.Names.events({
 		}	
 	},
 	
-	'click #namesTable td.f_name'(e){
-		if(!$(e.currentTarget).closest('tr').hasClass('arrived')){
-			var $input = $(e.currentTarget).find('input').attr('disabled', false);
-			setTimeout(function(){
-				$input.focus();
-			}, 10);
-			$input.one('blur', function(){
-				$(this).attr('disabled', true);
-			});
-		}
-	},
-	
-	'click #namesTable td.l_name'(e){
-		if(!$(e.currentTarget).closest('tr').hasClass('arrived')){
-			var $input = $(e.currentTarget).find('input').attr('disabled', false);
-			setTimeout(function(){
-				$input.focus();
-			}, 10);
-			$input.one('blur', function(){
-				$(this).attr('disabled', true);
-			});
-		}
-	},
-	
 	'change #showArrivedGuests'(e){
 		const instance = Template.instance();
-		let state = instance.state.get('showArrivedGuests');
-		instance.state.set('showArrivedGuests', !state);
+		let state = Session.get('showArrivedGuests');
+		Session.set('showArrivedGuests', !state);
 	}
 });
