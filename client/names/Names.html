@@ -9,10 +9,8 @@
 
 	<div class="row">
 		<div class="small-6 columns">
-			<label for="showArrivedGuests">
-				<input type="checkbox" id="showArrivedGuests" name="showArrivedGuests" />
-				<label for="showArrivedGuests">Show Arrived Guests</label>				
-			</label>
+			<input type="checkbox" id="showArrivedGuests" name="showArrivedGuests" {{showArrivedChecked}} />
+			<label for="showArrivedGuests">Show Arrived Guests</label>	
 		</div>
 		<div class="small-6 columns right">
 			<span class="count"> <span class="arrived">{{arrivedCount}}</span> / <span class="total">{{list.names.length}}</span></span>

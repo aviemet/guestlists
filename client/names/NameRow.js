@@ -6,10 +6,19 @@ Template.NameRow.onCreated = function(){
 	Meteor.subscribe('allLists');
 };
 
+Template.NameRow.rendered = function(){
+	this.dropDown = new Foundation.DropdownMenu($(".dropdown"), {});
+};
+
 Template.NameRow.helpers({
 	checkArrived(){
 		var check = this.arrived;
 		return check ? "checked" : "";
+	},
+	tickerClass(){
+		if(this.guests.expected < this.guests.arrived){
+			return "guests_over";
+		}
 	}
 });
 

@@ -110,6 +110,20 @@ Meteor.methods({
 			set.$set['names.$.'+key] = val;
 		});
 		Lists.update({ "_id": listId, "names._id": nameId }, set);
+	},
+	'Lists.setNotes'(listId, nameId, note){
+		check(listId, String);
+		check(nameId, String);
+		check(note, String);
+		
+		Lists.update({
+			"_id": listId,
+			"names._id": nameId
+		}, {
+			"$set": {
+				'names.$.guests.notes': note
+			}
+		});
 	}
 });
 

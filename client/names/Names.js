@@ -8,7 +8,7 @@ Template.Names.onCreated(function(){
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);
 	
-	Session.set('showArrivedGuests', false);
+	Session.set('showArrivedGuests', true);
 	
 	Meteor.subscribe('allLists');
 	// Ensure Session variable purity (for some reason)
@@ -20,7 +20,7 @@ Template.Names.onCreated(function(){
 	}
 });
 
-Template.Names.onRendered = function(){
+Template.Names.rendered = function(){
 	$('#namesTable').stickyTableHeaders();
 };
  
@@ -68,6 +68,9 @@ Template.Names.helpers({
 			});
 		}
 		return count;
+	},
+	showArrivedChecked(){
+		return Session.get('showArrivedGuests') ? 'checked' : '';
 	}
 });
 

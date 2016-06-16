@@ -23,7 +23,7 @@ tr{
 	&.arrivedChecked{
 		color: $medium-gray;
 
-		input{
+		input[type=text]{
 			color: $medium-gray;
 		}
 		
