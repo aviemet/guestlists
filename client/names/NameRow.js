@@ -15,8 +15,8 @@ Template.NameRow.helpers({
 		var check = this.arrived;
 		return check ? "checked" : "";
 	},
-	tickerClass(){
-		if(this.guests.expected < this.guests.arrived){
+	tickerClass(){ // using {{#with}} is scoped to the guests object
+		if(this.expected < this.arrived){
 			return "guests_over";
 		}
 	}

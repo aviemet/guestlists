@@ -1,3 +1,27 @@
 <template name="Groups">
 	<h1>Group Management</h1>
+
+	<div class="input-group">
+		<input name="title" id="groupTitleInput" type="text" placeholder="Title of Group" class="input-group-field" autocomplete="off" />
+		<span class="input-group-button" style="width: 150px;">
+			<a id="newGroupButton" class="button"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create New Group</a>
+		</span>
+	</div>
+
+	<table>
+		<thead>
+			<tr>
+				<th>Group Name</th>
+				<th class="groupButton"></th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each groups}}
+				<tr>
+					<td>{{title}}</td>
+					<td class="groupButton">{{#if isOwner}}<a href="groups/manage" class="button">Manage</a>{{/if}}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
 </template>

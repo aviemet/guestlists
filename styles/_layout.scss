@@ -91,6 +91,10 @@ th, td{
 	&.ticker{
 		text-align: center;
 	}
+
+	&.groupButton{
+		width: 84px;
+	}
 }
 
 th.sortable{

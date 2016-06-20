@@ -5,22 +5,16 @@ import { buildNameObject } from '../lib/utils';
 const Groups = new Meteor.Collection('groups');
 
 Meteor.methods({
-	'Groups.insert'(title, domains, users){
+	'Groups.new'(title){
 		if(!this.userId){ throw new Meteor.Error('not-authorized'); }
 
 		check(title, String);
-		check(domains, Array);
-		check(users, Array);
 
-		let group = {
+		return Groups.insert({
 			title: title,
 			creator: this.userId,
-			createdAt: new Date(),
-			authorized_domains: domains,
-			authorized_users: users
-		};
-
-		return Groups.insert(group);
+			createdAt: new Date()
+		});
 	}
 });
 
