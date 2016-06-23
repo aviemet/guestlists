@@ -16,3 +16,9 @@ Template.registerHelper('formatDate', function(date) {
 Template.registerHelper('log', function(term){
 	console.log(term);
 });
+
+Meteor.startup(function() {
+	Deps.autorun(function() {
+		document.title = Session.get('document-title');
+	});
+});

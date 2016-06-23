@@ -5,12 +5,18 @@ import 'sticky-table-headers';
 import './Names.html';
 
 Template.Names.onCreated(function(){
+	Meteor.subscribe('allLists', function(){
+		// Set Document Title
+		let listId = FlowRouter.getParam("listId");
+		let ListName = Lists.findOne({_id: listId}).title;
+		Session.set('document-title', ListName + ' | Guest Lists');
+	});
+	
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);
 	
 	Session.set('showArrivedGuests', true);
 	
-	Meteor.subscribe('allLists');
 	// Ensure Session variable purity (for some reason)
 	if(_.isEmpty(Session.get('sortNames')) || 
 		!Session.get('sortNames').hasOwnProperty('term') || 

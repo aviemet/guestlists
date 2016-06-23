@@ -5,8 +5,8 @@ import './GuestLists.html';
 
 // GuestLists Template
 Template.GuestLists.onCreated(function(){
-	this.state = new ReactiveDict();
 	Meteor.subscribe('allLists');
+	this.state = new ReactiveDict();
 	// Ensure Session variable purity (for some reason)
 	if(_.isEmpty(Session.get('sortLists')) || !Session.get('sortLists').hasOwnProperty('term') || !Session.get('sortLists').hasOwnProperty('descending')){
 		Session.set('sortLists', {term: 'date', descending: false});
