@@ -28,7 +28,7 @@ Template.GuestLists.helpers({
 	lists(){	
 		const instance = Template.instance();
 		let session = Session.get('sortLists');
-		var options = {sort: {[session.term]: session.descending ? 1 : -1}};
+		var options = {sort: {[session.term]: session.descending ? -1 : 1}};
 		
 		if(instance.state.get('showPastEvents')){
 			return Lists.find({}, options);
@@ -55,7 +55,11 @@ Template.GuestLists.events({
 		const title = e.target.title.value;
 		const date = instance.newListPicker.getDate();
 
-		Meteor.call('Lists.insert', title, date);
+		try{
+			Meteor.call('Lists.insert', title, date);
+		} catch(e){
+			
+		}
 
 		e.target.title.value = "";
 	},

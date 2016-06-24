@@ -12,6 +12,10 @@ Meteor.methods({
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
+		
+		if(_.isEmpty(title)){
+			throw new Meteor.Error('invalid-input');
+		}
 
 		let record = Lists.insert({
 			title: title,

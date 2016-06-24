@@ -8,6 +8,7 @@
   "dependencies": {
     "hashids": "^1.0.2",
     "meteor-node-stubs": "~0.2.0",
-    "sticky-table-headers": "^0.1.19"
+    "sticky-table-headers": "^0.1.19",
+    "underscore": "^1.8.3"
   }
 }
