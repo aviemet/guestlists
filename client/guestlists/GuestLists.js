@@ -7,7 +7,7 @@ import './GuestLists.html';
 Template.GuestLists.onCreated(function(){
 	Meteor.subscribe('allLists');
 	this.state = new ReactiveDict();
-	// Ensure Session variable purity (for some reason)
+	// Ensure Session variable purity
 	if(_.isEmpty(Session.get('sortLists')) || !Session.get('sortLists').hasOwnProperty('term') || !Session.get('sortLists').hasOwnProperty('descending')){
 		Session.set('sortLists', {term: 'date', descending: false});
 	}
@@ -23,7 +23,7 @@ Template.GuestLists.rendered = function(){
 		setDefaultDate: moment().toDate()
 	});
 };
- 
+
 Template.GuestLists.helpers({
 	lists(){	
 		const instance = Template.instance();
@@ -39,6 +39,13 @@ Template.GuestLists.helpers({
 	past(date){
 		let today = moment().startOf('day').toDate();
 		return date < today;
+	},
+	owner(){
+		return this.creator === Meteor.userId();
+	},
+	editing(id){
+		const instance = Template.instance();
+		return instance.state.get('editing') === this._id;
 	}
 });
 
@@ -70,8 +77,26 @@ Template.GuestLists.events({
 			Meteor.call('Lists.remove', id);
 		}
 	},
+	
+	'click a.edit'(e){
+		const instance = Template.instance();
+		instance.state.set('editing', this._id);
+	},
+	
+	'click button.accept, keyup input.title_input'(e){
+		if(e.type === "keyup" && e.which !== 13) return false;
+		let title = $(e.currentTarget).closest('tr').find('input.title_input').first().val();
+		Meteor.call('Lists.updateTitle', this._id, title);
+		const instance = Template.instance();
+		instance.state.set('editing', null);
+	},
+	
+	'click button.cancel'(e){
+		const instance = Template.instance();
+		instance.state.set('editing', null);		
+	},
 
-	'click #guestListTable td.date'(e, instance){
+	'click #guestListTable tr.editing td.date'(e, instance){
 		if(!instance.editListPicker || !instance.editListPicker.isVisible()){
 			instance.editListPicker = new Pikaday({
 				field: $(e.currentTarget).find('input')[0],

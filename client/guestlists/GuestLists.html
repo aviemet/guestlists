@@ -31,19 +31,39 @@
 			<tr>
 				<th class="sortable" data-sort="title">Event Name</th>
 				<th class="date center sortable" data-sort="date">Date</th>
-				<th>&nbsp;</th>
+				<th class="actions"><i class="fa fa-cogs"></i></th>
 			</tr>
 		</thead>
 		<tbody>
 			{{#each lists}}
 				
-				<tr class="{{#if past date}}past{{/if}}" data-id="{{_id}}">
-					<td><a href="/lists/{{_id}}">{{title}}</a></td>
+				<tr class="{{#if past date}}past{{/if}} {{#if editing _id}}editing{{/if}}" data-id="{{_id}}">
+					<td>
+						{{#if editing _id}}
+							<div class="input-group">
+								<input class="input-group-field title_input" type="text" name="title" value={{title}} >
+								<div class="input-group-button">
+									<button class="accept button"><i class="fa fa-check"></i></button>
+								</div>
+								<div class="input-group-button">
+									<button class="cancel button"><i class="fa fa-times"></i></button>
+								</div>
+							</div>
+						{{else}}
+							<a href="/lists/{{_id}}">{{title}}</a>
+						{{/if}}
+					</td>
 					<td class="date">
-						<input type="text" name="date" value="{{formatDate date}}" data-value="{{date}}" class="pikaday" disabled />
+						{{#if editing _id}}
+							<input type="text" name="date" value="{{formatDate date}}" data-value="{{date}}" class="pikaday" disabled />
+						{{else}}
+							<span class="date">{{formatDate date}}</span>
+						{{/if}}
 					</td>
 					<td class="actions">
-						<a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i></a>
+						{{#if owner}}
+							{{> guestlist_actions}}
+						{{/if}}
 					</td>
 				</tr>
 

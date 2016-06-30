@@ -38,6 +38,10 @@ tr{
 			}
 		}
 	}
+	
+	.input-group{
+		margin-bottom: 0;
+	}
 }
 
 td{
@@ -79,7 +83,7 @@ th, td{
 	}
 
 	&.actions{
-		width: 40px;
+		width: 90px;
 		text-align: center;
 	}
 

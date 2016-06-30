@@ -65,6 +65,8 @@ $foundation-palette: (
   success: #168341,
   warning: #ffae00,
   alert: #ec5840,
+  accept: #168341,
+  cancel: #ec5840
 );
 
 @each $class, $color in $foundation-palette {
