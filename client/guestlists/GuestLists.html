@@ -40,30 +40,26 @@
 				<tr class="{{#if past date}}past{{/if}} {{#if editing _id}}editing{{/if}}" data-id="{{_id}}">
 					<td>
 						{{#if editing _id}}
-							<div class="input-group">
-								<input class="input-group-field title_input" type="text" name="title" value={{title}} >
-								<div class="input-group-button">
-									<button class="accept button"><i class="fa fa-check"></i></button>
-								</div>
-								<div class="input-group-button">
-									<button class="cancel button"><i class="fa fa-times"></i></button>
-								</div>
-							</div>
+							<input class="title_input" type="text" name="title" value={{title}} >
 						{{else}}
 							<a href="/lists/{{_id}}">{{title}}</a>
 						{{/if}}
 					</td>
 					<td class="date">
 						{{#if editing _id}}
-							<input type="text" name="date" value="{{formatDate date}}" data-value="{{date}}" class="pikaday" disabled />
+							<input type="text" name="date" value="{{formatDate date}}" data-value="{{date}}" class="pikaday" />
 						{{else}}
 							<span class="date">{{formatDate date}}</span>
 						{{/if}}
 					</td>
 					<td class="actions">
-						{{#if owner}}
-							{{> guestlist_actions}}
-						{{/if}}
+						{{#if canEdit}}
+							{{#if editing _id}}
+								<button class="small accept button"><i class="fa fa-check"></i></button>
+								<button class="small cancel button"><i class="fa fa-times"></i></button>
+							{{else}}
+								{{> guestlist_actions}}
+						{{/if}}{{/if}}
 					</td>
 				</tr>
 

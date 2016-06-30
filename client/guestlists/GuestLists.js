@@ -40,7 +40,7 @@ Template.GuestLists.helpers({
 		let today = moment().startOf('day').toDate();
 		return date < today;
 	},
-	owner(){
+	canEdit(){
 		return this.creator === Meteor.userId();
 	},
 	editing(id){
@@ -85,9 +85,15 @@ Template.GuestLists.events({
 	
 	'click button.accept, keyup input.title_input'(e){
 		if(e.type === "keyup" && e.which !== 13) return false;
+		
+		const instance = Template.instance();
+		
 		let title = $(e.currentTarget).closest('tr').find('input.title_input').first().val();
 		Meteor.call('Lists.updateTitle', this._id, title);
-		const instance = Template.instance();
+		console.log(instance.editListPicker.getDate());
+		let date = instance.editListPicker.getDate();
+		Meteor.call('Lists.updateDate', this._id, date);
+		
 		instance.state.set('editing', null);
 	},
 	
@@ -103,10 +109,10 @@ Template.GuestLists.events({
 				format: 'M/D/YY',
 				defaultDate: moment(new Date($(e.currentTarget).find('input').data('value'))),
 				setDefaultDate: true,
-				onSelect: function(date) {
-					let listId = $(e.currentTarget).closest('tr').data('id');
-					Meteor.call('Lists.updateDate', listId, date);
-				},
+// 				onSelect: function(date) {
+// 					let listId = $(e.currentTarget).closest('tr').data('id');
+// 					Meteor.call('Lists.updateDate', listId, date);
+// 				},
 				onClose: function(){
 					instance.editListPicker.destroy();
 				}
