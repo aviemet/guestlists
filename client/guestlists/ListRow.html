@@ -1,0 +1,38 @@
+<template name="ListRow">
+	{{#if editing _id}}
+		{{> editing_row}}
+	{{else}}
+		{{> display_row}}
+	{{/if}}
+</template>
+
+<template name="display_row">
+	<tr class="{{#if past date}}past{{/if}}">
+		<td class="name">
+			<a href="/lists/{{_id}}">{{title}}</a>
+		</td>
+		<td class="date">
+			<span class="date">{{formatDate date}}</span>
+		</td>
+		<td class="actions">
+			{{#if canEdit}}
+				{{> guestlist_actions}}
+			{{/if}}
+		</td>
+	</tr>
+</template>
+
+<template name="editing_row">
+	<tr class="{{#if past date}}past{{/if}} editing">
+		<td>
+			<input class="title_input" type="text" name="title" value={{title}} >
+		</td>
+		<td class="date">
+			<input type="text" name="date" value="{{formatDate date}}" data-value="{{date}}" class="pikaday" />
+		</td>
+		<td class="actions">
+			<button class="small accept button"><i class="fa fa-check"></i></button>
+			<button class="small cancel button"><i class="fa fa-times"></i></button>
+		</td>
+	</tr>
+</template>

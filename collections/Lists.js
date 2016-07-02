@@ -12,7 +12,7 @@ Meteor.methods({
 		if(!this.userId){
 			throw new Meteor.Error('not-authorized');
 		}
-		
+
 		if(_.isEmpty(title)){
 			throw new Meteor.Error('invalid-input');
 		}
@@ -48,7 +48,7 @@ Meteor.methods({
 		check(name, String);
 
 		let nameObj = buildNameObject(name);
-		
+
 		Lists.update({_id: listId}, {$push: {names: nameObj}});
 	},
 	'Lists.bulkAddNames'(listId, names){
@@ -90,11 +90,25 @@ Meteor.methods({
 			}
 		})
 	},
+	'Lists.updateExpectedGuests'(listId, nameId, guests){
+		check(listId, String);
+		check(nameId, String);
+		check(guests, Number);
+
+		Lists.update({
+			"_id": listId,
+			"names._id": nameId
+		}, {
+			"$set": {
+				'names.$.guests.expected': guests
+			}
+		});
+	},
 	'Lists.updateArrivedGuests'(listId, nameId, guests){
 		check(listId, String);
 		check(nameId, String);
 		check(guests, Number);
-		
+
 		Lists.update({
 			"_id": listId,
 			"names._id": nameId
@@ -108,7 +122,7 @@ Meteor.methods({
 		check(listId, String);
 		check(nameId, String);
 		check(name, Object);
-		
+
 		var set = {"$set": {}}
 		_.each(name, function(val, key){
 			set.$set['names.$.'+key] = val;
@@ -119,7 +133,7 @@ Meteor.methods({
 		check(listId, String);
 		check(nameId, String);
 		check(note, String);
-		
+
 		Lists.update({
 			"_id": listId,
 			"names._id": nameId

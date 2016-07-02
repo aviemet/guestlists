@@ -1,6 +1,6 @@
 <template name="GuestLists">
 	<h1>Upcoming Events</h1>
-	
+
 	<div class="row">
 		<div class="small-12 columns">
 			<input type="checkbox" id="showPastEvents" name="showPastEvents" />
@@ -8,23 +8,8 @@
 		</div>
 	</div>
 	<br/>
-	<div class="row">
-		<form id="newListForm">
-			<div class="small-12 medium-5 large-7 columns">
-				<input name="title" type="text" placeholder="Add An Event" />
-			</div>
-			<div class="small-8 medium-4 large-3 columns">
-				<div class="input-group">
-					<input name="date" type="text" id="datepicker" class="input-group-field" />
-					<span class="input-group-label"><i class="fa fa-calendar"></i></span>
-				</div>
-			</div>
-			<div class="small-4 medium-3 large-2 columns">
-				<input type="submit" value="- Add List -" class="button full" />
-			</div>
-			<textarea id="pasteable" style="display: none;"></textarea>
-		</form>
-	</div>
+
+	{{> ListAddForm}}
 
 	<table id="guestListTable">
 		<thead>
@@ -36,33 +21,7 @@
 		</thead>
 		<tbody>
 			{{#each lists}}
-				
-				<tr class="{{#if past date}}past{{/if}} {{#if editing _id}}editing{{/if}}" data-id="{{_id}}">
-					<td>
-						{{#if editing _id}}
-							<input class="title_input" type="text" name="title" value={{title}} >
-						{{else}}
-							<a href="/lists/{{_id}}">{{title}}</a>
-						{{/if}}
-					</td>
-					<td class="date">
-						{{#if editing _id}}
-							<input type="text" name="date" value="{{formatDate date}}" data-value="{{date}}" class="pikaday" />
-						{{else}}
-							<span class="date">{{formatDate date}}</span>
-						{{/if}}
-					</td>
-					<td class="actions">
-						{{#if canEdit}}
-							{{#if editing _id}}
-								<button class="small accept button"><i class="fa fa-check"></i></button>
-								<button class="small cancel button"><i class="fa fa-times"></i></button>
-							{{else}}
-								{{> guestlist_actions}}
-						{{/if}}{{/if}}
-					</td>
-				</tr>
-
+				{{> ListRow}}
 			{{/each}}
 		</tbody>
 	</table>

@@ -11,10 +11,10 @@ Template.addNamesForm.onCreated(function(){
  * Waiting for the subscription to be ready
  * This is a "not the meteor way" hack to wait until the subscription to Lists
  * is ready in the rendered function so that I can update the selected attribute
- * of the option input box. Only necessary because I can't conditionally set an 
+ * of the option input box. Only necessary because I can't conditionally set an
  * attribute, only an attribute's values. The "correct" way to do this would be
  * in the template with a conditional arround the selected attribute listening
- * to the size of the names array in the list. If I were able to do this, the 
+ * to the size of the names array in the list. If I were able to do this, the
  * waitForSubscription method and the rendered method would be unnecessary.
  */
 function waitForSubscription(subscription, cb){
@@ -51,7 +51,7 @@ Template.addNamesForm.helpers({
 Template.addNamesForm.events({
 	'submit #addNamesForm'(e){
 		e.preventDefault();
-		
+
 		if(e.target.name){
 			let name = e.target.name.value.trim();
 			let listId = FlowRouter.getParam("listId");
@@ -67,10 +67,11 @@ Template.addNamesForm.events({
 	'paste #namesInput'(e){
 		$("#pasteableInput").focus();
 		setTimeout(function(){
-			handlePastedNames($("#pasteableInput").val());
+			var count = insertPastedNames($("#pasteableInput").val());
 			$("#pasteableInput").val("");
 			$("#namesInput").focus();
-		}, 0);
+			Session.set('callout', {title: count + ' names added', center: true});
+		}, 10);
 	},
 
 	'change #inputSelect'(e){
@@ -90,7 +91,7 @@ Template.addNamesForm.events({
 	}
 });
 
-function handlePastedNames(input){
+function insertPastedNames(input){
 	var namesArray = [];
 
 	let listId = FlowRouter.getParam("listId");
@@ -98,8 +99,9 @@ function handlePastedNames(input){
 	$.each(lines, function(i, line){
 		let name = buildNameObject(line);
 		if(name){
-			namesArray.push(name);			
+			namesArray.push(name);
 		}
 	});
 	Meteor.call('Lists.bulkAddNames', listId, namesArray);
+	return lines.length;
 }

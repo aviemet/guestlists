@@ -1,0 +1,45 @@
+#guestListTable{
+	th, td{
+		&.date{
+			width: 100px;
+		}
+
+		&.actions{
+			width: 90px;
+			text-align: center;
+		}
+
+		// &.groupButton{
+		// 	width: 84px;
+		// }
+	}
+
+	tbody{
+		tr{
+			&.past{
+				background-color: #FFE0E0;
+
+				&:nth-child(even) {
+					background-color: #FECCCC;
+				}
+
+				td.date{
+					color: $dark-gray;
+					font-style: italic;
+				}
+			}
+
+			td{
+				height: 40px;
+
+				&.date{
+					position: relative;
+				}
+
+				&.name{
+					padding-left: 14px;
+				}
+			}
+		}
+	}
+}

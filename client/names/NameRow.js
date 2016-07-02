@@ -27,41 +27,41 @@ Template.NameRow.events({
 		let listId = FlowRouter.getParam("listId");
 		let nameId = $(e.currentTarget).closest('tr').data('id');
 
-		$(e.currentTarget).closest('tr').addClass('past').fadeOut('fast', function(){	
+		$(e.currentTarget).closest('tr').addClass('past').fadeOut('fast', function(){
 			Meteor.call('Lists.removeName', listId, nameId);
 		});
 	},
-	
+
 	'change input.arrivedChecker'(e){
 		let listId = FlowRouter.getParam("listId");
 		let nameId = e.currentTarget.value;
 		let arrived = e.currentTarget.checked;
-		console.log(arrived);
 		if(!Session.get('showArrivedGuests') && arrived){
-			$(e.currentTarget).closest('tr').fadeOut(function(){			
+			$(e.currentTarget).closest('tr').fadeOut(function(){
 				Meteor.call('Lists.toggleNameArrived', listId, nameId, arrived);
 			});
 		} else {
 			Meteor.call('Lists.toggleNameArrived', listId, nameId, arrived)
 		}
 	},
-	
+
 	'click td.name'(e){
-		// Arrived guests have a line through the, editing would look bad (also why edit an arrived guest?)
-		if(!$(e.currentTarget).closest('tr').hasClass('arrived')){
+		var _this = this;
+		// Arrived guests have a line through the, editing would look bad
+		// (also why edit an arrived guest?)
+		if(!this.arrived){
 			var $input = $(e.currentTarget).find('input.editable').attr('disabled', false);
 			setTimeout(function(){
 				$input.focus();
 			}, 10);
 			$input.on('blur keyup', function(e){
 				if(e.type === "keyup" && e.which !== 13) return false;
-				
+
 				let listId = FlowRouter.getParam("listId");
-				let nameId = $(e.currentTarget).closest('tr').data('id');
 				let name = {};
 				name[$input.attr('name')] = $input.val();
-				Meteor.call('Lists.updateName', listId, nameId, name);
-				
+				Meteor.call('Lists.updateName', listId, _this._id, name);
+
 				$(this).attr('disabled', true);
 				if(_.isFunction(this.off)){
 					this.off('blur keyup');
@@ -69,7 +69,28 @@ Template.NameRow.events({
 			});
 		}
 	},
-	
+
+	'click td.plus'(e){
+		var _this = this;
+		var $input = $(e.currentTarget).find('input.editable').attr('disabled', false);
+		setTimeout(function(){
+			$input.focus().select();
+		}, 10);
+		$input.on('blur keyup', function(e){
+			if(e.type === "keyup" && e.which !== 13) return false;
+
+			let listId = FlowRouter.getParam("listId");
+			let count = parseInt($input.val());
+			let nameId = $(e.currentTarget).closest('tr').data('id');
+			Meteor.call('Lists.updateExpectedGuests', listId, nameId, count);
+
+			$(this).attr('disabled', true);
+			if(_.isFunction(this.off)){
+				this.off('blur keyup');
+			}
+		});
+	},
+
 	'change td.ticker input'(e){
 		let listId = FlowRouter.getParam("listId");
 		let nameId = $(e.currentTarget).closest('tr').data('id');

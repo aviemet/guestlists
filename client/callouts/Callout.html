@@ -1,0 +1,9 @@
+<template name="Callout">
+	<div class="{{#if type}}{{type}}{{else}}success{{/if}} callout {{#if center}}center{{/if}}" data-closable>
+		{{#if title}}<h5>{{{title}}}</h5>{{/if}}
+		{{#if content}}{{{content}}}{{/if}}
+		<button class="close-button" type="button" data-close>
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+</template>

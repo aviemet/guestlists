@@ -11,7 +11,9 @@
 			<input class="editable" type="text" name="lastName" value="{{lastName}}" disabled />
 		</td>
 		{{#with guests}}
-		<td class="plus">+{{expected}}</td>
+		<td class="plus">
+			+<input class="editable" type="text" name="plus" value="{{expected}}" disabled />/
+		</td>
 		<td class="ticker"><input class="{{tickerClass}}" type="number" value="{{arrived}}" min="0" /></td>
 		{{/with}}
 		<td class="actions">
