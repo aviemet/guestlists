@@ -94,7 +94,9 @@ Template.NameRow.events({
 	'change td.ticker input'(e){
 		let listId = FlowRouter.getParam("listId");
 		let nameId = $(e.currentTarget).closest('tr').data('id');
-		Meteor.call('Lists.updateArrivedGuests', listId, nameId, parseInt(e.currentTarget.value));
+		setTimeout(function(){
+			Meteor.call('Lists.updateArrivedGuests', listId, nameId, parseInt(e.currentTarget.value));
+		}, 10);
 	}
 });
 
