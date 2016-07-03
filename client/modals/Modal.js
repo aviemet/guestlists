@@ -1,7 +1,13 @@
+import { Template } from 'meteor/templating';
+
+import './Modal.html';
 
 Template.Modal.rendered = function(){
-	this.elem = new Foundation.Reveal($("#modal"), {});
-	console.log('modal rendered');
+	Template.Modal.modal = new Foundation.Reveal($("#modal"), {});
+
+	Template.Modal.show = function(){
+		Template.Modal.modal.open();
+	};
 };
 
 Template.Modal.events({
@@ -10,7 +16,7 @@ Template.Modal.events({
 	}
 });
 
-Template.Modal.helpers({  
+Template.Modal.helpers({
   activeModal: function() {
     return Session.get('activeModal');
   }
