@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Roles } from '../lib/utils'
 
-
 const UsersGroups = new Meteor.Collection('users_groups');
 
 Meteor.methods({
@@ -33,7 +32,7 @@ Meteor.methods({
 
 	'Users.leaveGroup'(userId, groupId){
 		check(userId, String);
-		check(groupId, String);		
+		check(groupId, String);
 
 		let row = UsersGroups.findOne({
 			userId: userId,
@@ -47,3 +46,5 @@ Meteor.methods({
 		return UsersGroups.remove(row._id);
 	}
 });
+
+export default UsersGroups;

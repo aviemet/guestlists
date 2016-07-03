@@ -28,7 +28,7 @@ zimme:active-route
 momentjs:moment
 seba:minifiers-autoprefixer
 fourseven:scss
-zurb:foundation-sites
 richsilv:pikaday
 fortawesome:fontawesome
 session
+zurb:foundation-sites

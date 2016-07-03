@@ -9,8 +9,10 @@ Template.guestlist_actions.rendered = function(){
 };
 
 Template.guestlist_actions.events({
-	'click .dropdown.menu .menu'(e){
-		const instance = Template.instance();
+	'click .dropdown.menu .menu'(e, instance){
 		instance.elem._hide();
+	},
+	'click .share'(e){
+    	Session.set('activeModal', 'Groups');
 	}
 });

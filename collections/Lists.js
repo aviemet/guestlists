@@ -55,8 +55,6 @@ Meteor.methods({
 		check(listId, String);
 		check(names, Array);
 
-		console.log(names);
-
 		Lists.update({_id: listId}, {$addToSet: {names: {$each: names}}});
 	},
 	'Lists.removeName'(listId, nameId){

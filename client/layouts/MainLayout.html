@@ -11,14 +11,18 @@
 		</div>
 	</div>
 	
+	{{#if callout}}
+		<div class="row column">
+			{{> Callout callout}}
+		</div>
+	{{/if}}
+	
 	<main class="row column">
 		<div id="content">
 			{{> Template.dynamic template=content}}
 		</div>
 	</main>
 	
-	{{#if callout}}
-		{{> Callout callout}}
-	{{/if}}
+	{{> Modal}}
 
 </template>
