@@ -5,7 +5,7 @@ import './ListRow.html';
 
 Template.ListRow.onCreated(function(){
 	// Subscribe to the DB
-	Meteor.subscribe('allLists');
+	Meteor.subscribe('lists');
 	Session.set('editing', false);
 });
 Template.editing_row.onCreated(function(){

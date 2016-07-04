@@ -1,26 +1,29 @@
 import { Meteor } from 'meteor/meteor';
 import Lists from '../collections/Lists';
-import Groups from '../collections/Groups';
-import UsersGroups from '../collections/UsersGroups';
-import UsersLists from '../collections/UsersLists';
+// import Groups from '../collections/Groups';
+// import UsersGroups from '../collections/UsersGroups';
+// import UsersLists from '../collections/UsersLists';
 
-Meteor.publish('allLists', function(){
+Meteor.publish('lists', function(){
 	let userId = this.userId;
-// 	let groups = UsersGroups.find({user_id: userId});
-	
-	let shares = UsersLists.find({user_id: userId}, {_id: 0, list_id: 1});
-	var share_lists = shares.map(function(list){
-		return list.list_id;
+
+	let User = Meteor.users.findOne({_id: userId});
+	var shared_lists = !User.lists ? [] : User.lists.map(function(list){
+		return list._id;
 	});
 	return Lists.find({
 		$or: [
 			{creator: userId},
-			{user_id: {$in: share_lists}}
-		]}, 
+			{_id: {$in: shared_lists}}
+		]},
 		{sort: {date: 1}
 	}	);
 });
 
-Meteor.publish('groups', function(){
-	return Groups.find({}, {sort: {createdAt: -1}});
+Meteor.publish('users', function(){
+	return Meteor.users.find({}, {sort: {email: 1}});
 });
+
+// Meteor.publish('groups', function(){
+// 	return Groups.find({}, {sort: {createdAt: -1}});
+// });

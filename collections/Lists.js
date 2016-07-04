@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { buildNameObject } from '../lib/utils';
+import { buildNameObject, Roles, Matches } from '../lib/utils';
 
 const Lists = new Meteor.Collection('lists');
 
@@ -140,6 +140,54 @@ Meteor.methods({
 				'names.$.guests.notes': note
 			}
 		});
+	},
+
+	'User.shareList'(userId, listId, role){
+		check(userId, String);
+		check(listId, String);
+		check(role, Matches.isRole);
+
+		let User = Meteor.users.findOne({_id: userId}, {fields: {'services.google.name': 1, 'services.google.email': 1}});
+		console.log(User);
+		let List = Lists.findOne({_id: listId}, {fields: {title: 1}});
+
+		Lists.update({
+			"_id": listId
+		}, {
+			"$addToSet": {
+				"users": {_id: userId, role: role, email: User.services.google.email, name: User.services.google.name}
+			}
+		});
+
+		Meteor.users.update({
+			"_id": userId
+		}, {
+			"$addToSet": {
+				"lists": {_id: listId, role: role, title: List.title}
+			}
+		});
+	},
+
+	'User.unshareList'(userId, listId){
+		check(userId, String);
+		check(listId, String);
+
+		Lists.update({
+			"_id": listId
+		}, {
+			"$pull": {
+				"users": {_id: userId}
+			}
+		});
+
+		Meteor.users.update({
+			"_id": userId
+		}, {
+			"$pull": {
+				"lists": {_id: listId}
+			}
+		});
+
 	}
 });
 

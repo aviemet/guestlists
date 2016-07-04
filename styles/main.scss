@@ -1,10 +1,5 @@
-@import "./settings";
-@import '{zurb:foundation-sites}/scss/foundation';
-@import './foundation';
+@import "./foundation/index";
 
-@import "./base";
-@import "./layout";
-@import "./inputs";
+@import "./base/index";
 
-@import "./guest_lists";
-@import "./name_lists";
+@import "./layout/index";

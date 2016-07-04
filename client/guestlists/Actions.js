@@ -13,8 +13,6 @@ Template.guestlist_actions.events({
 		instance.dropdown._hide();
 	},
 	'click .share'(e, instance){
-		window['modal'] = Template.Modal;
-    	Session.set('activeModal', 'Groups');
-    	Template.Modal.show();
+		Template.Modal.show('Sharing', this._id);
 	}
 });

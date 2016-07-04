@@ -18,7 +18,6 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 reactive-dict
 accounts-ui
-accounts-password
 kadira:flow-router
 kadira:blaze-layout
 accounts-google
@@ -32,3 +31,4 @@ richsilv:pikaday
 fortawesome:fontawesome
 session
 zurb:foundation-sites
+mizzao:autocomplete

@@ -5,7 +5,7 @@ import 'sticky-table-headers';
 import './Names.html';
 
 Template.Names.onCreated(function(){
-	Meteor.subscribe('allLists', function(){
+	Meteor.subscribe('lists', function(){
 		// Set Document Title
 		let listId = FlowRouter.getParam("listId");
 		let ListName = Lists.findOne({_id: listId}).title;

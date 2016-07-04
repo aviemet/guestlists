@@ -1,0 +1,32 @@
+<template name="Sharing">
+	<div class="row">
+		<div class="columns">
+			<div class="input-group">
+				<span class="input-group-label"><i class="fa fa-user"></i></span>
+				{{> inputAutocomplete settings=settings class="input-group-field" placeholder="Email or Username"}}
+				<div class="input-group-button">
+					<button class="button primary" id="individual_share_button">Share</button>
+				</div>
+			</div>
+			<input type="hidden" id="individual_share_input" />
+
+			<h4>Sharing List With:</h4>
+			<table>
+				<thead>
+					<th>User</th>
+					<th>Access</th>
+					<th><i class="fa fa-user-times"></i></th>
+				</thead>
+				<tbody>
+					{{#each user in sharedUsers}}
+						<tr>
+							<td>{{user.name}}</td>
+							<td>{{user.role}}</td>
+							<td><a class="alert unshare" data-id="{{user._id}}"><i class="fa fa-times"></i></a></td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</template>

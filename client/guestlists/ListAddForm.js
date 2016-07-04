@@ -5,7 +5,7 @@ import './ListAddForm.html';
 
 // ListAddForm Template
 Template.ListAddForm.onCreated(function(){
-	Meteor.subscribe('allLists');
+	Meteor.subscribe('lists');
 });
 
 Template.ListAddForm.rendered = function(){

@@ -5,8 +5,10 @@
 }
 
 .top-bar{
+	color: $topbar-color;
+
 	a{
-		color: $white;
+		color: $topbar-color;
 	}
 
 	li.menu-text{
@@ -27,16 +29,15 @@ th.sortable{
 	}
 }
 
-#login-buttons{
-	color: $black;
-	a{
-		color: $battery-blue;
+// #login-buttons{
+// 	a{
+// 		color: $battery-blue;
 
-		&#login-sign-in-link, &#login-name-link{
-			color: $white;
-		}
-	}
-}
+// 		&#login-sign-in-link, &#login-name-link{
+// 			color: $white;
+// 		}
+// 	}
+// }
 
 #inputSelect{
 	font-family: $font-family-icons;

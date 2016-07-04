@@ -19,7 +19,7 @@
 			{{#each groups}}
 				<tr>
 					<td>{{title}}</td>
-					<td class="groupButton">{{#if isOwner}}<a href="groups/manage" class="button">Manage</a>{{/if}}</td>
+					<td class="groupButton">{{#if isOwner}}<a href="/groups/manage/{{_id}}" class="button">Manage</a>{{/if}}</td>
 				</tr>
 			{{/each}}
 		</tbody>

@@ -3,7 +3,7 @@ import { buildNameObject } from '../../lib/utils';
 
 Template.addNamesForm.onCreated(function(){
 	this.state = new ReactiveDict();
-	this.subscription = Meteor.subscribe('allLists');
+	this.subscription = Meteor.subscribe('lists');
 	Session.set('filterQuery', "");
 });
 
