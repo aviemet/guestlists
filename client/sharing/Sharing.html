@@ -3,12 +3,12 @@
 		<div class="columns">
 			<div class="input-group">
 				<span class="input-group-label"><i class="fa fa-user"></i></span>
-				{{> inputAutocomplete settings=settings class="input-group-field" placeholder="Email or Username"}}
+				{{> inputAutocomplete settings=settings id="individual_share_input" class="input-group-field" placeholder="Email or Name"}}
 				<div class="input-group-button">
 					<button class="button primary" id="individual_share_button">Share</button>
 				</div>
 			</div>
-			<input type="hidden" id="individual_share_input" />
+			<input type="hidden" id="individual_share_hidden" />
 
 			<h4>Sharing List With:</h4>
 			<table>
@@ -21,7 +21,13 @@
 					{{#each user in sharedUsers}}
 						<tr>
 							<td>{{user.name}}</td>
-							<td>{{user.role}}</td>
+							<td>
+								<select class="roles_select" data-id="{{user._id}}">
+									{{#each role in roles}}
+										<option value="{{@index}}" {{selected @index user.role}}>{{role}}</option>
+									{{/each}}
+								</select>
+							</td>
 							<td><a class="alert unshare" data-id="{{user._id}}"><i class="fa fa-times"></i></a></td>
 						</tr>
 					{{/each}}

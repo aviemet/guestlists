@@ -1,9 +1,9 @@
 import Lists from '../../collections/Lists';
+import {Roles} from '../../lib/utils';
 
 import './Sharing';
 
 Template.Sharing.onCreated(function(){
-	Meteor.subscribe('groups');
 	Meteor.subscribe('users');
 	Meteor.subscribe('lists');
 });
@@ -33,26 +33,56 @@ Template.Sharing.helpers({
 	sharedUsers: function(){
 		if(!Session.get('activeModal')) return false;
 
-		var list = Lists.findOne({_id: Session.get('activeModal').data});
+		const list = Lists.findOne({_id: Session.get('activeModal').data});
 		return list && list.hasOwnProperty('users') ? list.users : [];
+	},
+	roles: function(id){
+		if(!Number.isInteger(id)) return Roles;
+		return Roles[id];
+	},
+	selected: function(index, user_role){
+		return index === user_role ? 'selected' : '';
+	},
+	callout: function(){
+		return true;
 	}
 });
 
 Template.Sharing.events = ({
 	'keyup input'(e){ // Resize modal for more content
-		// console.log(Template.Modal.modal);
 	},
 	'autocompleteselect input'(e, template, user) {
-		$('#individual_share_input').val(user._id);
+		$('#individual_share_hidden').val(user._id);
 	},
 	'click #individual_share_button'(e){
-		let userId = $('#individual_share_input').val();
-		let listId = Session.get('activeModal').data;
-		Meteor.call('User.shareList', userId, listId, 1);
+		const userId = $('#individual_share_hidden').val();
+		const listId = Session.get('activeModal').data;
+		if(!shareList(listId, userId)){
+			
+		}
 	},
 	'click .unshare'(e){
-		let userId = $(e.currentTarget).data('id');
-		let listId = Session.get('activeModal').data;
+		const userId = $(e.currentTarget).data('id');
+		const listId = Session.get('activeModal').data;
 		Meteor.call('User.unshareList', userId, listId);
+	},
+	'change select.roles_select'(e){
+		const userId = $(e.currentTarget).data('id');
+		const listId = Session.get('activeModal').data;
+		Meteor.call('User.updateListRole');
 	}
-})
+});
+
+shareList = (listId, userId) => {
+	if(listId && userId){
+		Meteor.call('User.shareList', userId, listId, 1); // Default user role is 'edit'
+	} else {
+		const input = $("#individual_share_input").val();
+		const user = Meteor.users.findOne({"services.google.email": input});
+		if(user){
+			Meteor.call('User.shareList', user._id, listId, 1);
+		} else {
+			return false;
+		}
+	}
+}
