@@ -148,7 +148,6 @@ Meteor.methods({
 		check(role, Matches.isRole);
 
 		let User = Meteor.users.findOne({_id: userId}, {fields: {'services.google.name': 1, 'services.google.email': 1}});
-		console.log(User);
 		let List = Lists.findOne({_id: listId}, {fields: {title: 1}});
 
 		Lists.update({
@@ -188,6 +187,28 @@ Meteor.methods({
 			}
 		});
 
+	},
+	
+	'User.updateListRole'(userId, listId, role){
+		check(userId, String);
+		check(listId, String);
+		check(role, Number);
+		
+// 		Lists.update({
+// 			"_id": listId
+// 		}, {
+// 			"$set": {
+// 				"users": {_id: userId, role: role, email: User.services.google.email, name: User.services.google.name}
+// 			}
+// 		});
+
+// 		Meteor.users.update({
+// 			"_id": userId
+// 		}, {
+// 			"$addToSet": {
+// 				"lists": {_id: listId, role: role, title: List.title}
+// 			}
+// 		});
 	}
 });
 
