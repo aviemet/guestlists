@@ -24,6 +24,7 @@ Template.editing_row.rendered = function(){
 	});
 }
 
+// Random comment to allow another commit
 Template.display_row.helpers({
 	canEdit(){
 		return this.creator === Meteor.userId() || _.find(this.users, function(user){ return user._id == Meteor.userId() }).role < 2;
