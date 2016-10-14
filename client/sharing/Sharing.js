@@ -45,6 +45,12 @@ Template.Sharing.helpers({
 	},
 	callout: function(){
 		return true;
+	},
+	roleDisabled: function(){
+		if(!Session.get('activeModal')) return false;
+
+		const list = Lists.findOne({_id: Session.get('activeModal').data});
+		return list.creator === Meteor.userId() ? "" : "disabled";
 	}
 });
 

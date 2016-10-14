@@ -22,7 +22,7 @@
 						<tr>
 							<td>{{user.name}}</td>
 							<td>
-								<select class="roles_select" data-id="{{user._id}}">
+								<select class="roles_select" data-id="{{user._id}}" {{roleDisabled}}>
 									{{#each role in roles}}
 										<option value="{{@index}}" {{selected @index user.role}}>{{role}}</option>
 									{{/each}}
