@@ -16,3 +16,10 @@ Template.guestlist_actions.events({
 		Template.Modal.show('Sharing', this._id);
 	}
 });
+
+Template.guestlist_actions.helpers({
+	userRole: function(role){
+		var userRole = this.creator === Meteor.userId() ? 0 : _.find(this.users, function(user){ return user._id == Meteor.userId() }).role;
+		return userRole <= role;
+	}
+});
