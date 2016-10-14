@@ -69,7 +69,8 @@ Template.Sharing.events = ({
 	'change select.roles_select'(e){
 		const userId = $(e.currentTarget).data('id');
 		const listId = Session.get('activeModal').data;
-		Meteor.call('User.updateListRole');
+		const role = $(e.currentTarget).val();
+		Meteor.call('User.updateListRole', userId, listId, parseInt(role));
 	}
 });
 

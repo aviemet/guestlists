@@ -84,7 +84,7 @@ Meteor.methods({
 			"names._id": nameId
 		}, {
 			"$set": {
-				'names.$.arrived': arrived
+				"names.$.arrived": arrived
 			}
 		})
 	},
@@ -98,7 +98,7 @@ Meteor.methods({
 			"names._id": nameId
 		}, {
 			"$set": {
-				'names.$.guests.expected': guests
+				"names.$.guests.expected": guests
 			}
 		});
 	},
@@ -112,7 +112,7 @@ Meteor.methods({
 			"names._id": nameId
 		}, {
 			"$set": {
-				'names.$.guests.arrived': guests
+				"names.$.guests.arrived": guests
 			}
 		});
 	},
@@ -137,7 +137,7 @@ Meteor.methods({
 			"names._id": nameId
 		}, {
 			"$set": {
-				'names.$.guests.notes': note
+				"names.$.guests.notes": note
 			}
 		});
 	},
@@ -194,21 +194,23 @@ Meteor.methods({
 		check(listId, String);
 		check(role, Number);
 		
-// 		Lists.update({
-// 			"_id": listId
-// 		}, {
-// 			"$set": {
-// 				"users": {_id: userId, role: role, email: User.services.google.email, name: User.services.google.name}
-// 			}
-// 		});
+		Lists.update({
+			"_id": listId,
+			"users._id": userId
+		}, {
+			"$set": {
+				"users.$.role": role
+			}
+		});
 
-// 		Meteor.users.update({
-// 			"_id": userId
-// 		}, {
-// 			"$addToSet": {
-// 				"lists": {_id: listId, role: role, title: List.title}
-// 			}
-// 		});
+		Meteor.users.update({
+			"_id": userId,
+			"lists._id": listId
+		}, {
+			"$set": {
+				"lists.$.role": role
+			}
+		});
 	}
 });
 

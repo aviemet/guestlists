@@ -26,7 +26,7 @@ Template.editing_row.rendered = function(){
 
 Template.display_row.helpers({
 	canEdit(){
-		return this.creator === Meteor.userId();
+		return this.creator === Meteor.userId() || _.find(this.users, function(user){ return user._id == Meteor.userId() }).role < 2;
 	}
 });
 
