@@ -50,7 +50,7 @@ Template.Sharing.helpers({
 		if(!Session.get('activeModal')) return false;
 
 		const list = Lists.findOne({_id: Session.get('activeModal').data});
-		return list.creator === Meteor.userId() ? "" : "disabled";
+		return list.creator === Meteor.userId() || _.find(list.users, function(user){ return user._id == Meteor.userId() }).role === 0 ? "" : "disabled";
 	},
 	userAuthed: function(role){
 		if(!Session.get('activeModal')) return false;

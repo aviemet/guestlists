@@ -30,7 +30,11 @@
 									{{/each}}
 								</select>
 							</td>
-							<td><a class="alert unshare" data-id="{{user._id}}"><i class="fa fa-times"></i></a></td>
+							<td>
+								{{#if userAuthed 0}}
+									<a class="alert unshare" data-id="{{user._id}}"><i class="fa fa-times"></i></a>
+								{{/if}}
+							</td>
 						</tr>
 					{{/each}}
 				</tbody>
