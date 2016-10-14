@@ -41,6 +41,7 @@ Template.Names.helpers({
 
 		let listId = FlowRouter.getParam("listId");
 		var list = Lists.findOne({_id: listId}, {fields: {names: 1}});
+		console.log(list.names);
 
 		var filter = Session.get('filterQuery');
 		var showArrivedGuests = Session.get('showArrivedGuests');
@@ -52,7 +53,9 @@ Template.Names.helpers({
 			// Filter results by search terms
 			list.names = _.filter(list.names, function(name){
 				if(!showArrivedGuests && name.arrived) return false;
-				return (regex.test(name.firstName.tokenize()) || regex.test(name.lastName.tokenize()));
+				var test = !!regex.test(name.firstName.tokenize()+" "+name.lastName.tokenize());
+				console.log({name: name.firstName.tokenize()+" "+name.lastName.tokenize(), test: test});
+				return test;
 			});
 		}
 

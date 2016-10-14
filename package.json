@@ -6,6 +6,7 @@
     "test": "ROOT_URL=http://aviemet.dyndns.org:3000 meteor test --driver-package practicalmeteor:mocha"
   },
   "dependencies": {
+    "foundation-sites": "^6.2.3",
     "hashids": "^1.0.2",
     "meteor-node-stubs": "~0.2.0",
     "sticky-table-headers": "^0.1.19",
