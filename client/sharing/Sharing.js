@@ -51,6 +51,13 @@ Template.Sharing.helpers({
 
 		const list = Lists.findOne({_id: Session.get('activeModal').data});
 		return list.creator === Meteor.userId() ? "" : "disabled";
+	},
+	userAuthed: function(role){
+		if(!Session.get('activeModal')) return false;
+
+		const list = Lists.findOne({_id: Session.get('activeModal').data});
+		if(!list && !list.hasOwnProperty('users')) return false;
+		return list.creator === Meteor.userId() ? true : _.find(list.users, function(user){ return user._id == Meteor.userId() }).role <= role;
 	}
 });
 

@@ -24,7 +24,9 @@
 							<td>
 								<select class="roles_select" data-id="{{user._id}}" {{roleDisabled}}>
 									{{#each role in roles}}
-										<option value="{{@index}}" {{selected @index user.role}}>{{role}}</option>
+										{{#if userAuthed @index}}
+											<option value="{{@index}}" {{selected @index user.role}}>{{role}}</option>
+										{{/if}}
 									{{/each}}
 								</select>
 							</td>
