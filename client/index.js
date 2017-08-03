@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import 'foundation-sites/dist/foundation.js';
 
 import { Lists } from '../collections/Lists.js';
 

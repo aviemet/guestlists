@@ -1,0 +1,9 @@
+@import "./global";
+@import "./inputs";
+
+// Convenience classes for foundation colors
+@each $class, $color in $foundation-palette {
+  .#{$class}{
+    color: $color;
+  }
+}
