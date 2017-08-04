@@ -1,3 +1,4 @@
+import './Callout.html';
 
 Template.Callout.rendered = function(){
 	setTimeout(function(){

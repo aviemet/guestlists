@@ -37,3 +37,21 @@
 @include foundation-title-bar;
 @include foundation-tooltip;
 @include foundation-top-bar;
+
+
+@each $class, $color in $foundation-palette {
+  .#{$class}{
+    color: $color;
+  }
+}
+
+.dropdown.menu{
+  .menu{
+    position: absolute;
+    display: none;
+    
+    &.is-dropdown-submenu.js-dropdown-active{
+      display: block;
+    }
+  }
+}

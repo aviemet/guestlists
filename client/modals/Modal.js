@@ -10,7 +10,7 @@ Template.Modal.rendered = function(){
 	Template.Modal.modal = new Foundation.Reveal($("#modal"));
 
 	Template.Modal.show = function(template, data = null){
-    	Session.set('activeModal', {template: template, data: data});
+    Session.set('activeModal', {template: template, data: data});
 		Template.Modal.modal.open();
 
 		$(document).one('closed.zf.reveal', function(){

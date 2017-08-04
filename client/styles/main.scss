@@ -1,6 +1,12 @@
-@import "./foundation/settings";
-@import "./foundation/foundation";
+@import "./imports/foundation/settings";
+@import "./imports/foundation/foundation";
 
-@import "./base/index";
+@import "./imports/global";
 
-@import "./layout/index";
+@import "./imports/site";
+
+@import "./imports/guest_lists";
+@import "./imports/name_lists";
+
+@import "./imports/inputs";
+

@@ -1,13 +1,22 @@
 <template name="MainMenu">
-	<ul id="menu" class="dropdown menu" data-dropdown-menu data-disable-hover="true">
-		<!--
-		<li class="is-dropdown-submenu-parent"><a><i class="fa fa-bars"></i></a>
+	
+	<div class="top-bar">
+		<div class="top-bar-left">
 			<ul class="menu">
-				<li><a href="/lists">Guest Lists</a></li>
-				<li><a href="/groups">Groups</a></li>
+				<li class="menu-text"><a href="/lists">Guest Lists</a></li>
 			</ul>
-		</li>
-		-->
-		<li><a href="/lists">Guest Lists</a></li>
-	</ul>
+		</div>
+		<div class="top-bar-right">
+			<ul class="dropdown menu" data-dropdown-menu>
+				<li class="is-dropdown-submenu-parent"><a><i class="fa fa-bars" href="#"></i></a>
+					<ul class="menu vertical">
+						<li><a href="#">One</a></li>
+						<li><a href="#">Two</a></li>
+						<li>{{> loginButtons align="right"}}</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
 </template>

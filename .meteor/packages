@@ -31,6 +31,6 @@ mizzao:autocomplete
 shell-server@0.2.4
 google-config-ui@1.0.0
 dynamic-import@0.1.1
-fourseven:scss
 meteortoys:allthings
 zurb:foundation-sites
+fourseven:scss
