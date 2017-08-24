@@ -23,39 +23,39 @@ Meteor.publish('lists', function(){
 	});
 });
 
-Meteor.publish('past_lists', function(){
-	let userId = this.userId;
+// Meteor.publish('past_lists', function(){
+// 	let userId = this.userId;
 
-	let User = Meteor.users.findOne({_id: userId});
-	var shared_lists = !User.lists ? [] : User.lists.map(function(list){
-		return list._id;
-	});
-	return Lists.find({
-		date: { 
-			$lte: moment().startOf('day').toDate()
-		},
-		$or: [
-			{creator: userId},
-			{_id: {$in: shared_lists}}
-		]},
-		{sort: {date: -1}
-	});
-});
+// 	let User = Meteor.users.findOne({_id: userId});
+// 	var shared_lists = !User.lists ? [] : User.lists.map(function(list){
+// 		return list._id;
+// 	});
+// 	return Lists.find({
+// 		date: { 
+// 			$lte: moment().startOf('day').toDate()
+// 		},
+// 		$or: [
+// 			{creator: userId},
+// 			{_id: {$in: shared_lists}}
+// 		]},
+// 		{sort: {date: -1}
+// 	});
+// });
 
-Meteor.publish('all_lists', function(){
-	let userId = this.userId;
+// Meteor.publish('all_lists', function(){
+// 	let userId = this.userId;
 
-	let User = Meteor.users.findOne({_id: userId});
-	var shared_lists = !User.lists ? [] : User.lists.map(function(list){
-		return list._id;
-	});
-	return Lists.find({
-		$or: [
-			{creator: userId},
-			{_id: {$in: shared_lists}}
-		]
-	});
-});
+// 	let User = Meteor.users.findOne({_id: userId});
+// 	var shared_lists = !User.lists ? [] : User.lists.map(function(list){
+// 		return list._id;
+// 	});
+// 	return Lists.find({
+// 		$or: [
+// 			{creator: userId},
+// 			{_id: {$in: shared_lists}}
+// 		]
+// 	});
+// });
 
 Meteor.publish('users', function(){
 	return Meteor.users.find({}, {sort: {email: 1}});

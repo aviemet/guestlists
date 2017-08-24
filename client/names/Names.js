@@ -6,7 +6,7 @@ import './Names.html';
 
 Template.Names.onCreated(function(){
 	this.autorun(() => {
-		Meteor.subscribe('all_lists', function(){
+		Meteor.subscribe('lists', function(){
 			// Set Document Title
 			let listId = FlowRouter.getParam("listId");
 			let ListName = Lists.findOne({_id: listId}).title;
