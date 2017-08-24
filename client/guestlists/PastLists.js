@@ -1,23 +1,23 @@
 import { Template } from 'meteor/templating';
 import Lists from '../../collections/Lists';
 
-import './GuestLists.html';
+import './PastLists.html';
 
 // GuestLists Template
-Template.GuestLists.onCreated(function(){
+Template.PastLists.onCreated(function(){
 	// Subscribe to the DB
-	this.autorun(() => {
-		Meteor.subscribe('lists');
-	});
+  this.autorun(() => {
+	  Meteor.subscribe('past_lists');
+  });
 	// Init Template level storage
 	this.state = new ReactiveDict();
 	// Set sortable Session vars
 	if(_.isEmpty(Session.get('sortLists')) || !Session.get('sortLists').hasOwnProperty('term') || !Session.get('sortLists').hasOwnProperty('descending')){
-		Session.set('sortLists', {term: 'date', descending: false});
+		Session.set('sortLists', {term: 'date', descending: true});
 	}
 });
 
-Template.GuestLists.helpers({
+Template.PastLists.helpers({
 	lists(){
 		// Set the sortable field and direction
 		const instance = Template.instance();
@@ -25,11 +25,11 @@ Template.GuestLists.helpers({
 		var options = {sort: {[session.term]: session.descending ? -1 : 1}};
 
 		// Fetch the lists
-		return Lists.find({}, options);
+		return Lists.find({date: {$lte: moment().startOf('day').toDate()}}, options);
 	}
 });
 
-Template.GuestLists.events({
+Template.PastLists.events({
 	'change input#showPastEvents'(e, instance){
 		instance.state.set('showPastEvents', e.target.checked);
 	},

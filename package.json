@@ -2,6 +2,7 @@
   "name": "guestlist",
   "private": true,
   "scripts": {
+    "start": "npm run dev",
     "dev": "ROOT_URL=http://aviemet.dyndns.org:3000 meteor",
     "test": "ROOT_URL=http://aviemet.dyndns.org:3000 meteor test --driver-package practicalmeteor:mocha"
   },

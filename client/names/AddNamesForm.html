@@ -1,5 +1,6 @@
 <template name="addNamesForm">
 	<form id="addNamesForm">
+		
 		<div class="input-group">
 			<span class="input-group-button" style="width: 150px;">
 				<select id="inputSelect">
@@ -8,14 +9,19 @@
 				</select>
 			</span>
 			{{#if inputType "addNames"}}
-				<input name="name" id="namesInput" type="text" placeholder="Guest Name +1" class="input-group-field" autocomplete="off" />
+				<input class="input-group-field" id="namesInput" name="name" type="text" placeholder="Guest Name +1" autocomplete="off" />
 			{{else}}
-				<input name="filter" id="filterInput" type="text" placeholder="Filter Names" class="input-group-field" />
-				<a class="button input-group-button primary" id="clearFilter">- Clear -</a>
+				<input class="input-group-field" id="filterInput" name="filter" type="text" placeholder="Filter Names" />
+				<div class="input-group-button">
+					<button class="button primary" id="clearFilter">- Clear -</button>
+				</div>
 			{{/if}}
 		</div>
+		
 	</form>
+	
 	<div class="hidden">
 		<textarea id="pasteableInput"></textarea>
 	</div>
+	
 </template>
