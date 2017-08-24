@@ -20,7 +20,7 @@ Meteor.publish('lists', function(){
 			{_id: {$in: shared_lists}}
 		]},
 		{sort: {date: 1}
-	}	);
+	});
 });
 
 Meteor.publish('past_lists', function(){
@@ -39,7 +39,22 @@ Meteor.publish('past_lists', function(){
 			{_id: {$in: shared_lists}}
 		]},
 		{sort: {date: -1}
-	}	);
+	});
+});
+
+Meteor.publish('all_lists', function(){
+	let userId = this.userId;
+
+	let User = Meteor.users.findOne({_id: userId});
+	var shared_lists = !User.lists ? [] : User.lists.map(function(list){
+		return list._id;
+	});
+	return Lists.find({
+		$or: [
+			{creator: userId},
+			{_id: {$in: shared_lists}}
+		]
+	});
 });
 
 Meteor.publish('users', function(){
