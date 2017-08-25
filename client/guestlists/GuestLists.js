@@ -25,7 +25,9 @@ Template.GuestLists.helpers({
 		var options = {sort: {[session.term]: session.descending ? -1 : 1}};
 
 		// Fetch the lists
-		return Lists.find({}, options);
+		var lists = Lists.find({}, options);
+		console.log(lists);
+		return lists;
 	}
 });
 
