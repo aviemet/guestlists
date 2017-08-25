@@ -13,14 +13,14 @@ Meteor.publish('lists', function(){
 	});
 	return Lists.find({
 		date: { 
-			$gte: moment().startOf('day').toDate()
+			$gte: moment().startOf('day').subtract(1, 'second').toISOString()
 		},
 		$or: [
 			{creator: userId},
 			{_id: {$in: shared_lists}}
 		]},
-		{sort: {date: 1}
-	});
+		{ sort: {date: 1} }
+	);
 });
 
 // Meteor.publish('past_lists', function(){
