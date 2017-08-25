@@ -5,7 +5,6 @@ import Lists from '../collections/Lists';
 // import UsersLists from '../collections/UsersLists';
 
 Meteor.publish('lists', function(){
-	console.log(moment().startOf('day').subtract(1, 'second').toDate());
 	let userId = this.userId;
 
 	let User = Meteor.users.findOne({_id: userId});
@@ -14,7 +13,7 @@ Meteor.publish('lists', function(){
 	});
 	return Lists.find({
 		date: { 
-			$gte: moment().startOf('day').subtract(1, 'second').toDate()
+			$gte: moment().startOf('day').toDate()
 		},
 		$or: [
 			{creator: userId},
