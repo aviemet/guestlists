@@ -5,14 +5,12 @@ import 'sticky-table-headers';
 import './Names.html';
 
 Template.Names.onCreated(function(){
-// 	this.autorun(() => {
-		Meteor.subscribe('lists', function(){
-			// Set Document Title
-			let listId = FlowRouter.getParam("listId");
-			let ListName = Lists.findOne({_id: listId}).title;
-			Session.set('document-title', ListName + ' | Guest Lists');
-		});
-// 	});
+	Meteor.subscribe('lists', function(){
+		// Set Document Title
+		let listId = FlowRouter.getParam("listId");
+		let ListName = Lists.findOne({_id: listId}).title;
+		Session.set('document-title', ListName + ' | Guest Lists');
+	});
 
 	this.state = new ReactiveDict();
 	this.state.set('editingTitle', false);

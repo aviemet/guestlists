@@ -5,7 +5,7 @@ import Lists from '../collections/Lists';
 // import UsersLists from '../collections/UsersLists';
 
 Meteor.publish('lists', function(){
-	console.log('publishing lists');
+	console.log(moment().startOf('day').subtract(1, 'second').toDate());
 	let userId = this.userId;
 
 	let User = Meteor.users.findOne({_id: userId});
