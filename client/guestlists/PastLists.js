@@ -6,9 +6,9 @@ import './PastLists.html';
 // GuestLists Template
 Template.PastLists.onCreated(function(){
 	// Subscribe to the DB
-//   this.autorun(() => {
-// 	  Meteor.subscribe('past_lists');
-//   });
+  this.autorun(() => {
+	  Meteor.subscribe('past_lists');
+  });
 	// Init Template level storage
 	this.state = new ReactiveDict();
 	// Set sortable Session vars
@@ -25,7 +25,7 @@ Template.PastLists.helpers({
 		var options = {sort: {[session.term]: session.descending ? -1 : 1}};
 
 		// Fetch the lists
-// 		return Lists.find({date: {$lte: moment().startOf('day').toDate()}}, options);
+		return Lists.find({date: {$lte: moment().startOf('day').toDate()}}, options);
 	}
 });
 

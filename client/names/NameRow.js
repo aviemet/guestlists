@@ -2,9 +2,11 @@ import Lists from '../../collections/Lists.js';
 
 import './NameRow.html';
 
-Template.NameRow.onCreated = function(){
-	Meteor.subscribe('lists');
-};
+Template.NameRow.onCreated(function(){
+	this.autorun(() => {
+		Meteor.subscribe('list');
+	});
+});
 
 Template.NameRow.rendered = function(){
 	this.dropDown = new Foundation.DropdownMenu($(".dropdown"), {});
@@ -47,8 +49,7 @@ Template.NameRow.events({
 
 	'click td.name'(e){
 		var _this = this;
-		// Arrived guests have a line through the, editing would look bad
-		// (also why edit an arrived guest?)
+		// Arrived guests have a line through them, editing would look bad (also why edit an arrived guest?)
 		if(!this.arrived){
 			var $input = $(e.currentTarget).find('input.editable').attr('disabled', false);
 			setTimeout(function(){

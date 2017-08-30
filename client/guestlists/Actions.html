@@ -3,15 +3,20 @@
 		<li class=".is-dropdown-submenu-parent"><a><i class="fa fa-cog"></i></a>
 			<ul class="menu">
 				{{#if userRole 1}}
-					<li><a class="edit"><i class="fa fa-edit" aria-hidden="true"></i>Edit</a></li>
+					<li><a class="edit"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
 				{{/if}}
 
 				{{#if userRole 1}}
-					<li><a class="share"><i class="fa fa-user-plus" aria-hidden="true"></i>Share</a></li>
+					<li><a class="share"><i class="fa fa-user-plus" aria-hidden="true"></i> Share</a></li>
+				{{/if}}
+
+				{{#if userRole 1}}
+					<!--<li><a class="export"><i class="fa fa-save" aria-hidden="true"></i> Export</a></li>-->
 				{{/if}}
 
 				{{#if userRole 0}}
-					<li><a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i>Delete</a></li>
+					<li><hr class="short"/></li>
+					<li><a class="delete alert"><i class="fa fa-times" aria-hidden="true"></i> Delete</a></li>
 				{{/if}}
 			</ul>
 		</li>

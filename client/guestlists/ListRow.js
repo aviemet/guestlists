@@ -5,12 +5,15 @@ import './ListRow.html';
 
 Template.ListRow.onCreated(function(){
 	// Subscribe to the DB
-	Meteor.subscribe('lists');
+	this.autorun(() => {
+		Meteor.subscribe('lists');
+	});
 	Session.set('editing', false);
 });
+
 Template.editing_row.onCreated(function(){
 	// Subscribe to the DB
-	Meteor.subscribe('allLists');
+	Meteor.subscribe('lists');
 	// Init Template level storage
 	this.state = new ReactiveDict();
 });

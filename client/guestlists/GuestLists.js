@@ -6,7 +6,9 @@ import './GuestLists.html';
 // GuestLists Template
 Template.GuestLists.onCreated(function(){
 	// Subscribe to the DB
-	Meteor.subscribe('lists');
+	this.autorun(() => {
+		Meteor.subscribe('lists');
+	});
 	// Init Template level storage
 	this.state = new ReactiveDict();
 	// Set sortable Session vars
@@ -24,7 +26,6 @@ Template.GuestLists.helpers({
 
 		// Fetch the lists
 		var lists = Lists.find({}, options);
-		console.log(lists);
 		return lists;
 	}
 });

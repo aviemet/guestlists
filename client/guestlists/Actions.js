@@ -8,15 +8,6 @@ Template.guestlist_actions.rendered = function(){
 	});
 };
 
-Template.guestlist_actions.events({
-	'click .dropdown.menu .menu'(e, instance){
-		instance.dropdown._hide();
-	},
-	'click .share'(e, instance){
-		Template.Modal.show('Sharing', this._id);
-	}
-});
-
 Template.guestlist_actions.helpers({
 	/**
 	 * Returns whether user is authorized
@@ -28,5 +19,17 @@ Template.guestlist_actions.helpers({
 			return user._id == Meteor.userId() 
 		}).role;
 		return userRole <= role;
+	}
+});
+
+Template.guestlist_actions.events({
+	'click .dropdown.menu .menu'(e, instance){
+		instance.dropdown._hide();
+	},
+	'click .share'(e, instance){
+		Template.Modal.show('Sharing', this._id);
+	},
+	'click .export'(e, instance){
+	
 	}
 });
