@@ -8,7 +8,6 @@ Template.Names.onCreated(function(){
 	let listId = FlowRouter.getParam("listId");
 	this.autorun(() => {
 		Meteor.subscribe('list', listId, function(){
-			console.log('Names');
 			// Set Document Title
 			let ListName = Lists.findOne({_id: listId}).title;
 			Session.set('document-title', ListName + ' | Guest Lists');

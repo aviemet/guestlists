@@ -7,7 +7,6 @@ import './GuestLists.html';
 Template.GuestLists.onCreated(function(){
 	// Subscribe to the DB
 	this.autorun(() => {
-		console.log('GuestLists');
 		Meteor.subscribe('lists');
 	});
 	// Init Template level storage
