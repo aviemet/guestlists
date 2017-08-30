@@ -5,10 +5,11 @@ import 'sticky-table-headers';
 import './Names.html';
 
 Template.Names.onCreated(function(){
+	let listId = FlowRouter.getParam("listId");
 	this.autorun(() => {
-		Meteor.subscribe('list', function(){
+		Meteor.subscribe('list', listId, function(){
+			console.log('Names');
 			// Set Document Title
-			let listId = FlowRouter.getParam("listId");
 			let ListName = Lists.findOne({_id: listId}).title;
 			Session.set('document-title', ListName + ' | Guest Lists');
 		});

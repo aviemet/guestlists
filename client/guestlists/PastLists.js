@@ -7,6 +7,7 @@ import './PastLists.html';
 Template.PastLists.onCreated(function(){
 	// Subscribe to the DB
   this.autorun(() => {
+		console.log('PastLists');
 	  Meteor.subscribe('past_lists');
   });
 	// Init Template level storage
@@ -25,7 +26,7 @@ Template.PastLists.helpers({
 		var options = {sort: {[session.term]: session.descending ? -1 : 1}};
 
 		// Fetch the lists
-		return Lists.find({date: {$lte: moment().startOf('day').toDate()}}, options);
+		return Lists.find({}, options);
 	}
 });
 

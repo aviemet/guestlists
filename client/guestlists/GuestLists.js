@@ -7,6 +7,7 @@ import './GuestLists.html';
 Template.GuestLists.onCreated(function(){
 	// Subscribe to the DB
 	this.autorun(() => {
+		console.log('GuestLists');
 		Meteor.subscribe('lists');
 	});
 	// Init Template level storage
@@ -22,7 +23,7 @@ Template.GuestLists.helpers({
 		// Set the sortable field and direction
 		const instance = Template.instance();
 		let session = Session.get('sortLists');
-		var options = {sort: {[session.term]: session.descending ? -1 : 1}};
+		var options = { sort: {[session.term]: session.descending ? -1 : 1} };
 
 		// Fetch the lists
 		var lists = Lists.find({}, options);

@@ -4,16 +4,10 @@ import Lists from '../../collections/Lists.js';
 import './ListRow.html';
 
 Template.ListRow.onCreated(function(){
-	// Subscribe to the DB
-	this.autorun(() => {
-		Meteor.subscribe('lists');
-	});
 	Session.set('editing', false);
 });
 
 Template.editing_row.onCreated(function(){
-	// Subscribe to the DB
-	Meteor.subscribe('lists');
 	// Init Template level storage
 	this.state = new ReactiveDict();
 });
@@ -39,7 +33,6 @@ Template.ListRow.helpers({
 		return Session.get('editing') === this._id;
 	}
 });
-
 
 Template.editing_row.events({
 	'click button.accept, keyup input.title_input'(e){

@@ -48,7 +48,7 @@ Meteor.publish('past_lists', function(){
 	});
 });
 
-Meteor.publish('list', function(){
+Meteor.publish('list', function(listId){
 	let userId = this.userId;
 
 	let User = Meteor.users.findOne({_id: userId});
@@ -56,6 +56,7 @@ Meteor.publish('list', function(){
 		return list._id;
 	});
 	return Lists.find({
+		_id: listId,
 		$or: [
 			{creator: userId},
 			{_id: {$in: shared_lists}}

@@ -3,9 +3,6 @@ import Lists from '../../collections/Lists.js';
 import './NameRow.html';
 
 Template.NameRow.onCreated(function(){
-	this.autorun(() => {
-		Meteor.subscribe('list');
-	});
 });
 
 Template.NameRow.rendered = function(){
