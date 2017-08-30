@@ -15,6 +15,7 @@ Template.PastLists.onCreated(function(){
 	if(_.isEmpty(Session.get('sortLists')) || !Session.get('sortLists').hasOwnProperty('term') || !Session.get('sortLists').hasOwnProperty('descending')){
 		Session.set('sortLists', {term: 'date', descending: true});
 	}
+	Session.set('page', 0);
 });
 
 Template.PastLists.helpers({
@@ -23,9 +24,17 @@ Template.PastLists.helpers({
 		const instance = Template.instance();
 		let session = Session.get('sortLists');
 		var options = {sort: {[session.term]: session.descending ? -1 : 1}};
+		
+		// Set pagination variables
+		var limit = 10;
+		var page = Session.get('page');
+		var skip = limit * page;
 
 		// Fetch the lists
-		return Lists.find({}, options).limit(10);
+		return Lists.find({}, $.extend(options, {
+			skip: skip,
+			limit: limit
+		}));
 	}
 });
 

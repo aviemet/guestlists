@@ -26,7 +26,7 @@ Meteor.publish('lists', function(){
 	});
 });
 
-Meteor.publish('past_lists', function(){
+Meteor.publish('past_lists', function(){	
 	let userId = this.userId;
 
 	let User = Meteor.users.findOne({_id: userId});
