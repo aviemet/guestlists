@@ -26,7 +26,13 @@ Meteor.publish('lists', function(){
 	});
 });
 
-Meteor.publish('past_lists', function(){	
+Meteor.publish('past_lists', function(page, sort){
+	page = page || 0;
+	sort = sort || {date: -1};
+	console.log(sort);
+	var limit = Meteor.settings.public.limit;
+	var skip = page * limit;
+	
 	let userId = this.userId;
 
 	let User = Meteor.users.findOne({_id: userId});
@@ -35,7 +41,7 @@ Meteor.publish('past_lists', function(){
 	});
 	return Lists.find({
 		date: {
-			$lte: moment().startOf('day').toDate()
+			$lt: moment().startOf('day').subtract(1, 'second').toDate()
 		},
 		$or: [
 			{creator: userId},
@@ -44,8 +50,28 @@ Meteor.publish('past_lists', function(){
 	},
 	{
 		names: 0,
-		sort: {date: -1}
+		sort: sort,
+		skip: skip,
+		limit: limit
 	});
+});
+
+Meteor.publish('past_lists.count', function(sort){
+	let userId = this.userId;
+
+	let User = Meteor.users.findOne({_id: userId});
+	var shared_lists = !User.lists ? [] : User.lists.map(function(list){
+		return list._id;
+	});
+	Counts.publish(this, 'past_lists.count', Lists.find({
+		date: {
+			$lt: moment().startOf('day').toDate()
+		},
+		$or: [
+			{creator: userId},
+			{_id: {$in: shared_lists}}
+		]
+	}));
 });
 
 Meteor.publish('list', function(listId){

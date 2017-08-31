@@ -1,6 +1,6 @@
 <template name="PastLists">
 	<h1>Past Events</h1>
-
+	{{>pagination}}
 	<table id="guestListTable">
 		<thead>
 			<tr>
@@ -16,4 +16,34 @@
 		</tbody>
 	</table>
 
+</template>
+
+<template name="pagination">
+	
+	<ul class="pagination text-center" role="navigation" aria-label="Pagination">
+		<li class="pagination-previous {{previousDisabled}}">
+			{{#if page 1}}Previous
+			{{else}}<a aria-label="Previous Page" id="previous">Previous</a>
+			{{/if}}
+		</li>
+		{{#each p in pageCount}}
+		<li class="{{current p}}">
+			{{#if page p}}{{p}}
+			{{else}}<a href="#" aria-label="Page {{p}}" class="pagination-link" data-page="{{p}}">{{p}}</a>
+			{{/if}}
+		</li>
+		{{/each}}
+<!-- 		<li><a href="#" aria-label="Page 2">2</a></li>
+		<li><a href="#" aria-label="Page 3">3</a></li>
+		<li><a href="#" aria-label="Page 4">4</a></li>
+		<li class="ellipsis"></li>
+		<li><a href="#" aria-label="Page 12">12</a></li>
+		<li><a href="#" aria-label="Page 13">13</a></li> -->
+		<li class="pagination-next {{nextDisabled}}">
+			{{#if page totalPages}}Next
+			{{else}}<a aria-label="Next Page" id="next">Next</a>
+			{{/if}}
+		</li>
+	</ul>
+	
 </template>
